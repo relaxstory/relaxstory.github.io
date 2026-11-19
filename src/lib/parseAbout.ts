@@ -6,6 +6,7 @@ export type Block =
   | { type: 'pull'; text: string }
   | { type: 'close'; text: string }
   | { type: 'whisper'; lines: string[] }
+  | { type: 'center'; lines: string[] }
   | { type: 'cards'; items: { name: string; desc: string }[] };
 
 export interface Principle { no: string; title: string; sub: string; blocks: Block[] }
@@ -23,6 +24,12 @@ function addBlock(blocks: Block[], line: string) {
   const last = blocks[blocks.length - 1];
   if (line.startsWith('!! ')) return blocks.push({ type: 'close', text: line.slice(3).trim() });
   if (line.startsWith('>> ')) return blocks.push({ type: 'pull', text: line.slice(3).trim() });
+  if (line.startsWith('^^ ')) {
+    const text = line.slice(3).trim();
+    if (last?.type === 'center') last.lines.push(text);
+    else blocks.push({ type: 'center', lines: [text] });
+    return;
+  }
   if (line.startsWith('* ')) {
     const text = line.slice(2).trim();
     if (last?.type === 'whisper') last.lines.push(text);
