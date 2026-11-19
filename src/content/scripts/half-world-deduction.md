@@ -7,6 +7,7 @@ roles: 不限
 genderAdvice: 不限
 duration: 約 7 小時
 badge: 熱門
+featured: true
 hosts: [kaike]
 order: 6
 ---
