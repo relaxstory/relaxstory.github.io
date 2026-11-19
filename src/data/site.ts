@@ -4,7 +4,6 @@ export const site = {
   name: 'Re:LAX Story Lab',
   slogan: '每次相遇，都是一段值得記得的故事',
   contacts: [
-    { label: 'Email', text: 'removed@example.invalid', url: 'mailto:removed@example.invalid' },
     { label: 'Instagram', text: '@kac_larpgm', url: 'https://www.instagram.com/kac_larpgm/' },
   ],
 };
