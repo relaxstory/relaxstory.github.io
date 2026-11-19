@@ -1,79 +1,89 @@
 ---
 import Base from '../layouts/Base.astro';
 import ScriptCard from '../components/ScriptCard.astro';
+import Contact from '../components/Contact.astro';
 import { getCollection } from 'astro:content';
 
+// 首頁精選劇本：依 order 排序取前 3 部（已下架不顯示）
 const scripts = (await getCollection('scripts', (s) => s.data.status !== '已下架'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
 ---
 <Base>
+  <!-- 主視覺 -->
   <section class="hero">
     <div class="container">
-      <p class="eyebrow">Murder Mystery Studio</p>
-      <h1>Re: LAX <span>Story LAb</span></h1>
-      <p class="lead">在故事裡放鬆，做一晚另一個人。<br />推理、演繹、沉浸——每一場，都是一段新的人生。</p>
+      <img class="hero-logo" src="/brand/logo-full.webp" width="669" height="867"
+           alt="Re:LAX Story Lab — 每次相遇，都是一段值得記得的故事" />
       <div class="actions">
-        <a href="/scripts/" class="btn solid">探索劇本</a>
-        <a href="/booking/" class="btn">預約場次</a>
+        <a href="/booking/" class="btn solid">預約場次</a>
+        <a href="/scripts/" class="btn">劇本總覽</a>
       </div>
     </div>
   </section>
 
+  <!-- 工作室理念（請替換成實際內容） -->
   <section class="section">
-    <div class="container">
-      <h2 class="section-title">精選劇本</h2>
-      <p class="section-sub">從燒腦本格到催淚情感，總有一個故事在等你。</p>
-      <div class="grid">{scripts.map((s) => <ScriptCard script={s} />)}</div>
-      <p class="more"><a href="/scripts/">看全部劇本 →</a></p>
+    <div class="container center philosophy">
+      <p class="eyebrow">Our Philosophy</p>
+      <h2 class="section-title">工作室理念</h2>
+      <p>我們相信，每一段故事都值得被好好說完；每一次相遇，都值得被好好記得。</p>
+      <p>在 Re:LAX，放下日常的身分，換上另一個人生——推理、演繹、相聚，<br class="br-wide" />讓一晚的故事，成為你們之間長長久久的回憶。</p>
+      <a href="/about/" class="more">了解更多關於我們 →</a>
     </div>
   </section>
 
-  <section class="section about" id="about">
-    <div class="container about-grid">
-      <div>
-        <p class="eyebrow">About</p>
-        <h2 class="section-title">關於我們</h2>
-        <!-- 請替換成實際的工作室介紹 -->
-        <p>Re: LAX Story LAb 是一間專注於劇本殺體驗的工作室。我們相信，好的故事能讓人暫時放下日常，在另一個身分裡找到樂趣與共鳴。</p>
-        <p>從劇本挑選、場景佈置到主持人培訓，我們用心打磨每一個細節，只為了讓你在離開時，還想著那個故事。</p>
+  <!-- 精選劇本 -->
+  <section class="section alt">
+    <div class="container">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Featured Scripts</p>
+          <h2 class="section-title">精選劇本</h2>
+        </div>
+        <a href="/scripts/" class="more">更多劇本 →</a>
       </div>
-      <ul class="features">
-        <li><strong>精選劇本</strong><span>每部劇本皆經團隊實測後才上架</span></li>
-        <li><strong>專業主持</strong><span>穩定控場，新手老手都能玩得盡興</span></li>
-        <li><strong>沉浸場景</strong><span>音樂、燈光、道具，打造專屬氛圍</span></li>
-        <li><strong>包場服務</strong><span>朋友聚會、公司團建皆可預約</span></li>
-      </ul>
+      <div class="grid">{scripts.map((s) => <ScriptCard script={s} />)}</div>
     </div>
   </section>
 
-  <section class="section cta">
+  <!-- 預約 -->
+  <section class="section center">
     <div class="container">
+      <p class="eyebrow">Booking</p>
       <h2 class="section-title">準備好走進故事了嗎？</h2>
       <p class="section-sub">選好劇本，約上朋友，剩下的交給我們。</p>
       <a href="/booking/" class="btn solid">立即預約</a>
+    </div>
+  </section>
+
+  <!-- 聯絡方式 -->
+  <section class="section alt" id="contact">
+    <div class="container contact-wrap">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">聯絡我們</h2>
+        <p class="section-sub">包場、團建或任何問題，都歡迎與我們聯繫。</p>
+      </div>
+      <div class="card"><Contact /></div>
     </div>
   </section>
 </Base>
 
 <style>
   .hero {
-    padding: clamp(96px, 18vw, 180px) 0 clamp(72px, 12vw, 140px);
-    background:
-      radial-gradient(ellipse at 70% 20%, rgba(142, 44, 44, 0.35), transparent 60%),
-      radial-gradient(ellipse at 20% 80%, rgba(201, 162, 91, 0.15), transparent 55%);
+    padding: clamp(40px, 8vw, 80px) 0 clamp(56px, 9vw, 96px);
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(176, 142, 97, 0.12), transparent 65%);
     border-bottom: 1px solid var(--line);
   }
-  h1 { font-size: clamp(2.6rem, 9vw, 5rem); margin: 8px 0 16px; }
-  h1 span { color: var(--accent); display: inline-block; }
-  .lead { font-size: clamp(1rem, 2.4vw, 1.2rem); color: var(--text-dim); max-width: 36em; }
-  .actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
-  .more { text-align: right; margin-top: 24px; }
-  .about { background: var(--bg-elev); border-block: 1px solid var(--line); }
-  .about-grid { display: grid; gap: 48px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; }
-  .features { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
-  .features li { padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--bg-card); border-radius: 0 10px 10px 0; }
-  .features strong { display: block; font-family: var(--serif); }
-  .features span { color: var(--text-dim); font-size: 0.92rem; }
-  .cta { text-align: center; }
+  .hero-logo { width: min(420px, 82vw); height: auto; margin: 0 auto; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .philosophy { max-width: 720px; }
+  .philosophy p:not(.eyebrow) { color: var(--text-dim); font-size: 1.05rem; }
+  .more { display: inline-block; margin-top: 12px; letter-spacing: 0.05em; }
+  .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+  .head .section-title { margin: 0; }
+  .contact-wrap { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
+  @media (max-width: 640px) { .br-wide { display: none; } }
 </style>

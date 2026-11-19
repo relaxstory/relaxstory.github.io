@@ -1,4 +1,4 @@
-# Re: LAX Story LAb — 劇本殺工作室網站
+# Re:LAX Story Lab — 劇本殺工作室網站
 
 使用 [Astro](https://astro.build) 建立的靜態網站。
 
@@ -14,13 +14,17 @@ npm run build    # 產生正式網站到 dist/
 
 | 頁面 | 路徑 | 檔案 |
 |---|---|---|
-| 首頁（含關於我們） | `/` | `src/pages/index.astro` |
-| 劇本列表 | `/scripts/` | `src/pages/scripts/index.astro` |
+| 首頁（理念／精選劇本／預約／聯絡） | `/` | `src/pages/index.astro` |
+| 關於我們 | `/about/` | `src/pages/about.astro` |
+| 劇本總覽 | `/scripts/` | `src/pages/scripts/index.astro` |
 | 劇本詳細 | `/scripts/<id>/` | `src/pages/scripts/[id].astro` |
 | 主持人 | `/hosts/` | `src/pages/hosts.astro` |
 | 預約（目前為聯絡方式） | `/booking/` | `src/pages/booking.astro` |
 
 ## 新增／修改內容（不用碰程式碼）
+
+- **聯絡資訊、標語**：改 `src/data/site.ts`，全站一起更新。
+- **Logo**：放在 `public/brand/`（原始檔 `logo-original.webp`）。網站配色取自 Logo，定義在 `src/styles/global.css` 開頭。
 
 - **劇本**：在 `src/content/scripts/` 新增一個 `.md` 檔，檔名就是網址（例 `fog-harbor.md` → `/scripts/fog-harbor/`）。
   欄位說明見 `src/content.config.ts`。`status` 設為 `已下架` 即可隱藏。
@@ -29,8 +33,9 @@ npm run build    # 產生正式網站到 dist/
 
 ## 待辦
 
+- [x] Logo 與配色
 - [ ] 替換所有「範例內容」與「（待填寫）」的聯絡資訊
-- [ ] 加入 Logo、劇本封面圖、主持人照片
+- [ ] 加入劇本封面圖、主持人照片
 - [ ] 設定 `astro.config.mjs` 的 `site` 為正式網域
 - [ ] 部署（Cloudflare Pages / Netlify / Vercel，連 GitHub 自動部署）
 - [ ] **預約系統（第二階段）**：場次時段、線上預約表單、後台管理、資料庫

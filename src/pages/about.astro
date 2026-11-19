@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="關於我們" description="認識 Re:LAX Story Lab 劇本殺工作室。">
+  <section class="section">
+    <div class="container narrow">
+      <p class="eyebrow">About Us</p>
+      <h1 class="section-title">關於我們</h1>
+      <div class="prose">
+        <blockquote><p>⚠️ 範例內容，請替換成實際的工作室介紹。</p></blockquote>
+        <p>Re:LAX Story Lab 是一間專注於劇本殺體驗的工作室。名字裡的「Re:LAX」，是「放鬆」，也是「重新回到故事裡」。</p>
+        <p>我們相信，好的故事能讓人暫時放下日常，在另一個身分裡找到樂趣與共鳴。從劇本挑選、場景佈置到主持人培訓，我們用心打磨每一個細節，只為了讓你在離開時，還想著那個故事。</p>
+      </div>
+      <ul class="features">
+        <li><strong>精選劇本</strong><span>每部劇本皆經團隊實測後才上架</span></li>
+        <li><strong>專業主持</strong><span>穩定控場，新手老手都能玩得盡興</span></li>
+        <li><strong>沉浸場景</strong><span>音樂、燈光、道具，打造專屬氛圍</span></li>
+        <li><strong>包場服務</strong><span>朋友聚會、公司團建皆可預約</span></li>
+      </ul>
+      <div class="actions">
+        <a href="/scripts/" class="btn">劇本總覽</a>
+        <a href="/booking/" class="btn solid">預約場次</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .narrow { max-width: 760px; }
+  .prose p { color: var(--text-dim); font-size: 1.05rem; }
+  .features { list-style: none; padding: 0; margin: 40px 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .features li { padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--bg-card); border-radius: 0 10px 10px 0; }
+  .features strong { display: block; font-family: var(--serif); font-size: 1.1rem; }
+  .features span { color: var(--text-dim); font-size: 0.92rem; }
+  .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+</style>

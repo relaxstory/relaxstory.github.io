@@ -16,7 +16,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 <Base title={d.title} description={d.tagline}>
   <article class="section">
     <div class="container narrow">
-      <a href="/scripts/" class="back">← 所有劇本</a>
+      <a href="/scripts/" class="back">← 劇本總覽</a>
       <div class="tags">
         {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
         {d.genre.map((g) => <span class="tag">{g}</span>)}
@@ -58,7 +58,6 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
   }
   .facts dt { color: var(--text-dim); font-size: 0.82rem; }
   .facts dd { margin: 0; font-weight: 600; }
-  .stars { color: var(--accent); letter-spacing: 2px; }
   .hosts { margin: 40px 0; }
   .hosts h2 { font-size: 1.3rem; }
   .hosts ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }

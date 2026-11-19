@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import Contact from '../components/Contact.astro';
 import { getCollection } from 'astro:content';
+// 線上預約系統開發中（relaxstory.github.io）。上線後把下方按鈕改連到預約系統即可。
 const titles = Object.fromEntries(
   (await getCollection('scripts', (s) => s.data.status === '上架中')).map((s) => [s.id, s.data.title]),
 );
-// 預約系統將於後續開發（需要資料庫與後台管理）。
-// 目前先提供聯絡管道，讓客人可以透過 LINE / 電話預約。
 ---
-<Base title="預約" description="預約 Re: LAX Story LAb 劇本殺場次。">
+<Base title="預約場次" description="預約 Re:LAX Story Lab 劇本殺場次。">
   <section class="section">
     <div class="container narrow">
       <p class="eyebrow">Booking</p>
@@ -15,14 +15,9 @@ const titles = Object.fromEntries(
       <div class="card notice">
         <h2>線上預約系統即將推出</h2>
         <p>目前請透過以下方式與我們聯繫預約，告訴我們想玩的劇本、人數與時段：</p>
-        <!-- 請替換成實際聯絡方式 -->
-        <ul>
-          <li>LINE 官方帳號：（待填寫）</li>
-          <li>電話：（待填寫）</li>
-          <li>Instagram 私訊：（待填寫）</li>
-        </ul>
         <p id="picked" class="picked" data-titles={JSON.stringify(titles)} hidden></p>
-        <a href="/scripts/" class="btn">先去看看劇本</a>
+        <Contact />
+        <div class="actions"><a href="/scripts/" class="btn">先去看看劇本</a></div>
       </div>
     </div>
   </section>
@@ -44,7 +39,7 @@ const titles = Object.fromEntries(
 
 <style>
   .narrow { max-width: 760px; }
-  .notice:hover { transform: none; }
-  .notice h2 { margin-top: 0; color: var(--accent); }
-  .picked { padding: 10px 14px; background: var(--bg-elev); border-radius: 8px; }
+  .notice h2 { margin-top: 0; color: var(--accent-text); }
+  .picked { padding: 10px 14px; background: var(--bg-elev); border-radius: 8px; border-left: 3px solid var(--accent); }
+  .actions { margin-top: 28px; }
 </style>

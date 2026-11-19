@@ -4,8 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props { title?: string; description?: string; }
-const { title, description = 'Re: LAX Story LAb — 劇本殺工作室。沉浸式推理、情感演繹，每一場都是一段新的人生。' } = Astro.props;
-const fullTitle = title ? `${title}｜Re: LAX Story LAb` : 'Re: LAX Story LAb｜劇本殺工作室';
+const { title, description = 'Re:LAX Story Lab 劇本殺工作室——每次相遇，都是一段值得記得的故事。' } = Astro.props;
+const fullTitle = title ? `${title}｜Re:LAX Story Lab` : 'Re:LAX Story Lab｜劇本殺工作室';
 ---
 <!doctype html>
 <html lang="zh-Hant-TW">
@@ -16,10 +16,13 @@ const fullTitle = title ? `${title}｜Re: LAX Story LAb` : 'Re: LAX Story LAb｜
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#fbf9f4" />
+    <meta property="og:image" content="/brand/logo-original.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <Header />

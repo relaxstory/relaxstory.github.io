@@ -10,7 +10,7 @@ const rendered = await Promise.all(hosts.map(async (h) => ({
   scripts: scripts.filter((s) => s.data.hosts.includes(h.id)),
 })));
 ---
-<Base title="主持人介紹" description="認識 Re: LAX Story LAb 的主持人團隊。">
+<Base title="主持人介紹" description="認識 Re:LAX Story Lab 的主持人團隊。">
   <section class="section">
     <div class="container">
       <p class="eyebrow">Game Masters</p>
@@ -46,12 +46,12 @@ const rendered = await Promise.all(hosts.map(async (h) => ({
   .host:hover { transform: none; }
   .avatar {
     width: 120px; height: 120px; border-radius: 50%; overflow: hidden;
-    background: linear-gradient(135deg, var(--accent-2), var(--accent));
-    display: grid; place-items: center; font-family: var(--serif); font-size: 3rem; color: var(--bg);
+    background: linear-gradient(135deg, var(--navy), var(--accent));
+    display: grid; place-items: center; font-family: var(--serif); font-size: 3rem; color: #fff;
   }
   .avatar img { width: 100%; height: 100%; object-fit: cover; }
   h2 { margin: 0; font-size: 1.6rem; }
-  .role { color: var(--accent); margin: 0 0 12px; }
+  .role { color: var(--accent-text); margin: 0 0 12px; }
   .prose { margin-top: 12px; }
   .dim { color: var(--text-dim); font-size: 0.92rem; }
   @media (max-width: 560px) {

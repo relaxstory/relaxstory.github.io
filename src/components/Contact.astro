@@ -1,0 +1,19 @@
+---
+import { site } from '../data/site';
+const c = site.contact;
+const socials = [c.line, c.instagram, c.facebook];
+---
+<dl class="contact">
+  <div><dt>地址</dt><dd>{c.address}</dd></div>
+  <div><dt>營業時間</dt><dd>{c.hours}</dd></div>
+  <div><dt>電話</dt><dd>{c.phone}</dd></div>
+  <div><dt>Email</dt><dd>{c.email}</dd></div>
+  <div><dt>社群</dt><dd>{socials.map((s, i) => <>{i > 0 && '・'}{s.url ? <a href={s.url} target="_blank" rel="noopener">{s.label}</a> : <span>{s.label}（待填寫）</span>}</>)}</dd></div>
+</dl>
+
+<style>
+  .contact { margin: 0; display: grid; gap: 10px; }
+  .contact div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; }
+  dt { color: var(--accent-text); letter-spacing: 0.1em; }
+  dd { margin: 0; }
+</style>
