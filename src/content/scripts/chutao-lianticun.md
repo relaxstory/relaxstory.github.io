@@ -6,6 +6,7 @@ players: 5 人
 roles: 4 女 1 男
 genderAdvice: 1 女 1 男
 duration: 約 4.5 小時
+price:            # 價格（目前不顯示，可先填）
 badge: 新上架
 adapted: true
 featured: true

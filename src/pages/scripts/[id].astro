@@ -33,10 +33,10 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
         {d.roles && <div><dt>角色配置</dt><dd>{d.roles}</dd></div>}
         {d.genderAdvice && <div><dt>玩家性別建議</dt><dd>{d.genderAdvice}</dd></div>}
         {d.difficulty && <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
-        {d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
+        {site.showPrice && d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
         {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
       </dl>
-      {d.adapted && <p class="meta">＊本劇本為繁體中文改編版本（劇本繁化）。</p>}
+      {d.adapted && <p class="meta">＊本劇本已完成繁體中文化編排。</p>}
 
       {hasBody && <div class="prose"><Content /></div>}
 

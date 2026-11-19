@@ -13,7 +13,7 @@ const scripts = defineCollection({
     genderAdvice: z.string().optional(),        // 玩家性別建議，例：'1 女 1 男'、'不限'
     duration: z.string(),                       // 平均時長，例：'約 4.5 小時'
     difficulty: z.number().min(1).max(5).optional(), // 推理難度 1–5（可不填）
-    price: z.string().optional(),               // 價格（可不填，不填就不顯示）
+    price: z.coerce.string().nullish(),         // 價格，例：每人 NT$ 500（是否顯示由 site.ts 的 showPrice 控制）
     series: z.string().optional(),              // 系列，例：'牛鬼蛇神系列'
     badge: z.enum(['新上架', '熱門']).optional(), // 標記
     adapted: z.boolean().default(false),        // true = 劇本繁化

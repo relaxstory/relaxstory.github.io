@@ -6,6 +6,7 @@ players: 5 人
 roles: 5 男
 genderAdvice: 不限
 duration: 約 2.5 小時
+price:            # 價格（目前不顯示，可先填）
 series: 超能宇宙系列
 hosts: [kaike]
 order: 4
