@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const titles = Object.fromEntries(
+  (await getCollection('scripts', (s) => s.data.status === '上架中')).map((s) => [s.id, s.data.title]),
+);
 // 預約系統將於後續開發（需要資料庫與後台管理）。
 // 目前先提供聯絡管道，讓客人可以透過 LINE / 電話預約。
 ---
@@ -17,7 +21,7 @@ import Base from '../layouts/Base.astro';
           <li>電話：（待填寫）</li>
           <li>Instagram 私訊：（待填寫）</li>
         </ul>
-        <p id="picked" class="picked" hidden></p>
+        <p id="picked" class="picked" data-titles={JSON.stringify(titles)} hidden></p>
         <a href="/scripts/" class="btn">先去看看劇本</a>
       </div>
     </div>
@@ -29,8 +33,12 @@ import Base from '../layouts/Base.astro';
   const id = new URLSearchParams(location.search).get('script');
   const el = document.getElementById('picked');
   if (id && el) {
-    el.textContent = `你選擇的劇本代號：${id}（聯繫時請一併告知）`;
-    el.hidden = false;
+    const titles = JSON.parse(el.dataset.titles || '{}');
+    const title = titles[id];
+    if (title) {
+      el.textContent = `你選擇的劇本：《${title}》（聯繫時請一併告知）`;
+      el.hidden = false;
+    }
   }
 </script>
 
