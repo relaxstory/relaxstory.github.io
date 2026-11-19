@@ -3,6 +3,9 @@
 export const site = {
   name: 'Re:LAX Story Lab',
   slogan: '每次相遇，都是一段值得記得的故事',
+  // 全站「預約」按鈕連到哪裡。
+  // 預約系統正式開放後，改成 '/booking/'（預約系統網址：https://relaxstory.github.io/booking/）
+  bookingUrl: '/reservation/',
   // 劇本詳細頁下方的說明文字
   scriptNotes: [
     '「角色配置」係指劇本中角色之性別組成；標示「不限」者，表示角色無特定性別設定。',

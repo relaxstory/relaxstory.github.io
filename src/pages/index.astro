@@ -1,4 +1,5 @@
 ---
+import { site } from '../data/site';
 import Base from '../layouts/Base.astro';
 import ScriptCard from '../components/ScriptCard.astro';
 import Contact from '../components/Contact.astro';
@@ -18,7 +19,7 @@ const scripts = featured.length ? featured.slice(0, 6) : all.slice(0, 3);
       <img class="hero-logo" src="/brand/logo-full.webp" width="669" height="867"
            alt="Re:LAX Story Lab — 每次相遇，都是一段值得記得的故事" />
       <div class="actions">
-        <a href="/booking/" class="btn solid">預約場次</a>
+        <a href={site.bookingUrl} class="btn solid">預約場次</a>
         <a href="/scripts/" class="btn">劇本總覽</a>
       </div>
     </div>
@@ -55,7 +56,7 @@ const scripts = featured.length ? featured.slice(0, 6) : all.slice(0, 3);
       <p class="eyebrow">Booking</p>
       <h2 class="section-title">準備好走進故事了嗎？</h2>
       <p class="section-sub">選好劇本，約上朋友，剩下的交給我們。</p>
-      <a href="/booking/" class="btn solid">立即預約</a>
+      <a href={site.bookingUrl} class="btn solid">立即預約</a>
     </div>
   </section>
 

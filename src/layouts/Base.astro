@@ -19,7 +19,9 @@ const fullTitle = title ? `${title}｜Re:LAX Story Lab` : 'Re:LAX Story Lab｜�
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#fbf9f4" />
-    <meta property="og:image" content="/brand/logo-original.webp" />
+    <meta property="og:image" content={new URL('/brand/logo-original.webp', Astro.site).href} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />

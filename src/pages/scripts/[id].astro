@@ -48,7 +48,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
       )}
 
       {d.status === '上架中'
-        ? <a href={`/booking/?script=${script.id}`} class="btn solid">預約這個劇本</a>
+        ? <a href={`${site.bookingUrl}?script=${script.id}`} class="btn solid">預約這個劇本</a>
         : <p class="dim">此劇本{d.status}，敬請期待。</p>}
 
       <aside class="notes">

@@ -1,4 +1,5 @@
 ---
+import { site } from '../data/site';
 /*
  * 「關於我們」頁面的排版。
  * ⚠️ 文字內容請改 src/content/about.md，不用改這個檔案。
@@ -90,7 +91,7 @@ const closingTitle = about.closing?.title.split(/[｜|]/).map((s) => s.trim()) ?
         {about.closing.text.map((t) => <p class="final">{phrases(t).map((x) => <span>{x}</span>)}</p>)}
         <div class="actions">
           <a href="/scripts/" class="btn">劇本總覽</a>
-          <a href="/booking/" class="btn solid">預約場次</a>
+          <a href={site.bookingUrl} class="btn solid">預約場次</a>
         </div>
       </div>
     </section>

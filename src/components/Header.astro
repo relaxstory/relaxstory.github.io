@@ -1,4 +1,5 @@
 ---
+import { site } from '../data/site';
 // 選單項目：改這裡即可增減分頁
 const links = [
   { href: '/about/', label: '關於我們' },
@@ -17,7 +18,7 @@ const path = Astro.url.pathname;
     <label for="nav-toggle" class="burger" aria-hidden="true"><span></span></label>
     <nav>
       {links.map((l) => <a href={l.href} class={path.startsWith(l.href) ? 'active' : ''}>{l.label}</a>)}
-      <a href="/booking/" class="btn solid nav-cta">預約場次</a>
+      <a href={site.bookingUrl} class="btn solid nav-cta">預約場次</a>
     </nav>
   </div>
 </header>
