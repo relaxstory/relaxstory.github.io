@@ -15,7 +15,7 @@ npm run build    # 產生正式網站到 dist/
 | 頁面 | 路徑 | 檔案 |
 |---|---|---|
 | 首頁（理念／精選劇本／預約／聯絡） | `/` | `src/pages/index.astro` |
-| 關於我們 | `/about/` | `src/pages/about.astro` |
+| 關於我們 | `/about/` | 文字：`src/content/about.md`；排版：`src/pages/about.astro` |
 | 劇本總覽 | `/scripts/` | `src/pages/scripts/index.astro` |
 | 劇本詳細 | `/scripts/<id>/` | `src/pages/scripts/[id].astro` |
 | 主持人 | `/hosts/` | `src/pages/hosts.astro` |
@@ -23,6 +23,7 @@ npm run build    # 產生正式網站到 dist/
 
 ## 新增／修改內容（不用碰程式碼）
 
+- **關於我們**：改 `src/content/about.md`（純文字＋簡單符號，用法寫在檔案開頭）。
 - **聯絡資訊、標語**：改 `src/data/site.ts`，全站一起更新。
 - **Logo**：放在 `public/brand/`（原始檔 `logo-original.webp`）。網站配色取自 Logo，定義在 `src/styles/global.css` 開頭。
 
