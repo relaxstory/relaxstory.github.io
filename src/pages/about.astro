@@ -1,22 +1,197 @@
 ---
 import Base from '../layouts/Base.astro';
+
+/*
+ * 關於我們頁面內容。
+ * 修改文字：直接改下方引號內的文字即可。
+ * - intro：開場段落；{ quote: '...' } 會顯示成置中的強調句
+ * - principles：六大理念。blocks 內：
+ *     '一般段落'
+ *     { whisper: [...] }  斜體、帶神祕感的段落（05 使用）
+ *     { costs: [...] }    成本說明卡片（03 使用）
+ *   close：每段結尾的總結句（加框強調）
+ */
+
+const intro = [
+  '我們相信，每一段故事都值得被用心呈現，每一次相遇都值得被好好珍藏。',
+  'Re:LAX Story Lab（雷凱斯故事實驗室）的誕生，源於一個很簡單的想法：',
+  { quote: '能不能讓喜歡故事的人，更輕鬆地走進故事？' },
+  '我們熱愛劇本殺，也相信它不只是一場遊戲。',
+  '在不同的人生中推理、選擇、歡笑、遺憾，與一群人共同經歷原本不屬於自己的故事，正是劇本殺最迷人的地方。',
+  '但我們也發現，隨著劇本越來越長、參與成本逐漸提高，想好好體驗一場故事，似乎也變得越來越不容易。',
+  '於是，我們開始思考：',
+  { quote: '如果故事能更貼近日常，是不是就能讓更多人享受它？' },
+];
+
+type Block = string | { whisper: string[] } | { costs: { name: string; desc: string }[] };
+const principles: { no: string; title: string; sub: string; blocks: Block[]; close: string }[] = [
+  {
+    no: '01',
+    title: '讓故事，不必佔據一整天',
+    sub: '下班之後，也值得擁有另一段人生。',
+    blocks: [
+      '當一場劇本動輒需要七、八個小時，甚至更長的時間，參與劇本殺逐漸變成一件必須提前規劃、特別安排假期的活動。',
+      '但我們希望，故事不必總是如此遙不可及。',
+      '因此，Re:LAX 優先推廣約 2.5 至 4.5 小時的短時長劇本，讓玩家即使在平日下班後，也有機會與朋友相聚，享受一段完整的故事。',
+      '我們不認為故事越長就一定越好，也不認為短時長代表體驗必須妥協。',
+      '真正重要的，是一段故事能否在適合的篇幅裡，帶來足夠豐富而完整的感受。',
+    ],
+    close: '讓劇本殺不只是難得安排一次的娛樂，也能成為日常生活中，一個值得期待的夜晚。',
+  },
+  {
+    no: '02',
+    title: '少一點揪團壓力，多一點相聚的可能',
+    sub: '想玩一場劇本，不該先經歷一場人數推理。',
+    blocks: [
+      '喜歡劇本殺的人，或許都曾遇過這樣的情況：',
+      '好不容易找到大家都有興趣的劇本，卻因為人數不足、時間難以配合，最後只能遺憾取消。',
+      '因此，我們也希望推廣更多小人數劇本，讓三五好友就有機會成團，不必為了湊齊大量玩家而四處奔波。',
+      '我們理解，每個人都有自己的生活與時間安排。',
+      '所以比起要求玩家為了一場劇本克服重重困難，我們更希望盡可能降低參與門檻。',
+    ],
+    close: '讓故事不必等待所有條件都完美，讓相聚可以更容易發生。',
+  },
+  {
+    no: '03',
+    title: '讓價格透明，也讓專業有價值',
+    sub: '每一份收費，都應該有能被理解的理由。',
+    blocks: [
+      '隨著劇本殺產業發展，單場體驗費用接近甚至超過千元，已經不是罕見的事情。',
+      '我們理解，一場完整的劇本體驗，需要投入劇本授權、場地、人力、服裝、道具，以及大量事前準備。',
+      '這些付出都值得被尊重，也理應有合理的報酬。',
+      '但我們同時相信，玩家有權利了解自己支付的費用，究竟被運用在什麼地方。',
+      '因此，Re:LAX 希望推動更加透明的定價方式，清楚區分：',
+      {
+        costs: [
+          { name: '人力服務成本', desc: '主持、演繹、帶場與相關準備所投入的專業。' },
+          { name: '劇本呈現成本', desc: '劇本使用、服裝、道具及故事呈現所需的資源。' },
+          { name: '場地使用成本', desc: '提供遊戲空間所產生的實際費用。' },
+        ],
+      },
+      '我們不追求以低價作為唯一的競爭方式，也不認為專業應該被無償提供。',
+      '我們希望做到的，是讓玩家知道自己的每一筆支出從何而來，也讓主持人願意用準備與品質，回應這份信任。',
+    ],
+    close: '合理的價格，不應該只是便宜，而是每一分付出都能被看見。',
+  },
+  {
+    no: '04',
+    title: '用心呈現，而不只是把劇本帶完',
+    sub: '主持人的工作，不只是說完故事，而是讓故事真正發生。',
+    blocks: [
+      '一份劇本可以透過文字建立世界，但讓世界真正鮮活起來的，往往是遊戲過程中的細節。',
+      '一段恰到好處的音樂、一件具有意義的道具、一場精心安排的演繹，甚至是主持人選擇在哪一刻沉默，都可能改變玩家對故事的感受。',
+      '我們重視主持的節奏、流程的安排，以及每個環節背後的目的。',
+      '不為了增加演繹而演繹，也不為了製造效果而堆疊道具。',
+      '我們希望所有設計都能回到故事本身，讓每一份投入都有存在的意義。',
+      '同時，我們也相信，玩家才是每場故事真正的參與者。',
+      '主持人可以引導故事、營造氛圍，卻不應搶走屬於玩家的舞台。',
+    ],
+    close: '我們希望在適當的時候退到幕後，讓每個人都能在故事中找到自己的位置。',
+  },
+  {
+    no: '05',
+    title: '不只分享故事，也希望創造故事',
+    sub: '每一本劇本，都是等待被開啟的一份館藏。',
+    blocks: [
+      'Re:LAX Story Lab 的目標，不僅是提供劇本殺主持服務。',
+      '我們希望逐步建立一座屬於故事的資料館。',
+      '這裡收藏不同類型的故事，也記錄每一次玩家共同創造的回憶。',
+      '未來，我們期待透過原創劇本、互動敘事與 ARG（實境解謎遊戲），探索更多講述故事的可能。',
+      {
+        whisper: [
+          '或許某一天，訪客會在資料館中發現一份從未被登錄的檔案。',
+          '或許某段看似普通的文字，隱藏著另一個故事的入口。',
+          '而館長，也不一定知道所有謎題的答案。',
+        ],
+      },
+      '我們希望玩家不只是等待故事開始的人，也能成為主動探索故事的人。',
+    ],
+    close: '讓體驗不再只發生於遊戲桌前，而是從發現故事的那一刻起，便已悄悄展開。',
+  },
+  {
+    no: '06',
+    title: '讓每一次相遇，都值得被記得',
+    sub: '不是每個故事都需要轟轟烈烈。',
+    blocks: [
+      '我們知道，不是每個故事都需要轟轟烈烈，也不是每次體驗都必須留下難以忘懷的震撼。',
+      {
+        whisper: [
+          '有時候，只是一個下班後的夜晚。',
+          '幾個朋友圍坐在一起，為了一條線索爭論不休，因為意料之外的發展笑成一團，又或是在某個故事的結尾，短暫地沉默。',
+        ],
+      },
+      '那些看似微小的時刻，或許才是我們最想留下的東西。',
+      'Re:LAX 不希望劇本殺成為一件昂貴、耗時，又難以安排的娛樂。',
+      '我們希望它可以更輕鬆、更容易參與，同時保有應有的品質與感動。',
+    ],
+    close: '讓想玩的人更容易出發，讓願意付出的專業得到尊重，也讓每一段故事都有機會被好好呈現。',
+  },
+];
 ---
-<Base title="關於我們" description="認識 Re:LAX Story Lab 劇本殺工作室。">
-  <section class="section">
-    <div class="container narrow">
+<Base title="關於我們" description="讓故事成為生活的一部分，而不是生活的負擔。認識 Re:LAX Story Lab（雷凱斯故事實驗室）。">
+  <!-- 開場 -->
+  <header class="about-hero">
+    <div class="container narrow center">
       <p class="eyebrow">About Us</p>
-      <h1 class="section-title">關於我們</h1>
-      <div class="prose">
-        <blockquote><p>⚠️ 範例內容，請替換成實際的工作室介紹。</p></blockquote>
-        <p>Re:LAX Story Lab 是一間專注於劇本殺體驗的工作室。名字裡的「Re:LAX」，是「放鬆」，也是「重新回到故事裡」。</p>
-        <p>我們相信，好的故事能讓人暫時放下日常，在另一個身分裡找到樂趣與共鳴。從劇本挑選、場景佈置到主持人培訓，我們用心打磨每一個細節，只為了讓你在離開時，還想著那個故事。</p>
+      <h1>關於 Re:LAX Story Lab</h1>
+      <p class="lead">讓故事成為生活的一部分，<wbr />而不是生活的負擔。</p>
+    </div>
+  </header>
+
+  <!-- 緣起 -->
+  <section class="section">
+    <div class="container narrow intro">
+      {intro.map((b) => typeof b === 'string'
+        ? <p>{b}</p>
+        : <p class="pull">{b.quote}</p>)}
+    </div>
+  </section>
+
+  <!-- 六大理念目錄 -->
+  <nav class="toc-wrap" aria-label="六大理念">
+    <div class="container narrow">
+      <p class="eyebrow">Six Principles</p>
+      <ol class="toc">
+        {principles.map((p) => (
+          <li><a href={`#p${p.no}`}><span class="toc-no">{p.no}</span>{p.title}</a></li>
+        ))}
+      </ol>
+    </div>
+  </nav>
+
+  <!-- 六大理念 -->
+  {principles.map((p, i) => (
+    <section class={`section principle ${i % 2 ? 'alt' : ''}`} id={`p${p.no}`}>
+      <div class="container narrow">
+        <div class="p-head">
+          <span class="p-no">{p.no}</span>
+          <div>
+            <h2>{p.title}</h2>
+            <p class="p-sub">{p.sub}</p>
+          </div>
+        </div>
+        <div class="p-body">
+          {p.blocks.map((b) =>
+            typeof b === 'string' ? <p>{b}</p>
+            : 'whisper' in b ? <div class="whisper">{b.whisper.map((l) => <p>{l}</p>)}</div>
+            : <ul class="costs">{b.costs.map((c) => <li><strong>{c.name}</strong><span>{c.desc}</span></li>)}</ul>
+          )}
+          <p class="p-close">{p.close}</p>
+        </div>
       </div>
-      <ul class="features">
-        <li><strong>精選劇本</strong><span>每部劇本皆經團隊實測後才上架</span></li>
-        <li><strong>專業主持</strong><span>穩定控場，新手老手都能玩得盡興</span></li>
-        <li><strong>沉浸場景</strong><span>音樂、燈光、道具，打造專屬氛圍</span></li>
-        <li><strong>包場服務</strong><span>朋友聚會、公司團建皆可預約</span></li>
-      </ul>
+    </section>
+  ))}
+
+  <!-- 結語 -->
+  <section class="closing">
+    <div class="container narrow center">
+      <img src="/brand/logo-mark.webp" alt="" width="660" height="562" class="closing-mark" />
+      <h2><span>Re:LAX Story Lab</span><span class="sep">｜</span><span>雷凱斯故事實驗室</span></h2>
+      <p class="mottos">
+        <span>以專業承載故事，以細節創造沉浸。</span>
+        <span>讓故事融入生活，讓相遇留下回憶。</span>
+      </p>
+      <p class="final">因為我們相信，好的故事值得被經歷，<wbr />而不該因為時間、人數或價格，<wbr />成為遙不可及的選擇。</p>
       <div class="actions">
         <a href="/scripts/" class="btn">劇本總覽</a>
         <a href="/booking/" class="btn solid">預約場次</a>
@@ -26,11 +201,95 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
-  .narrow { max-width: 760px; }
-  .prose p { color: var(--text-dim); font-size: 1.05rem; }
-  .features { list-style: none; padding: 0; margin: 40px 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-  .features li { padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--bg-card); border-radius: 0 10px 10px 0; }
-  .features strong { display: block; font-family: var(--serif); font-size: 1.1rem; }
-  .features span { color: var(--text-dim); font-size: 0.92rem; }
-  .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .narrow { max-width: 720px; }
+
+  /* 開場 */
+  .about-hero {
+    padding: clamp(56px, 10vw, 104px) 0 clamp(40px, 7vw, 72px);
+    background: radial-gradient(ellipse at 50% 20%, rgba(176, 142, 97, 0.14), transparent 65%);
+    border-bottom: 1px solid var(--line);
+  }
+  .about-hero h1 { font-size: clamp(1.9rem, 6vw, 2.8rem); margin: 6px 0 18px; }
+  .lead {
+    font-family: var(--serif); font-size: clamp(1.15rem, 3.4vw, 1.5rem);
+    color: var(--accent-text); letter-spacing: 0.06em; margin: 0; word-break: keep-all;
+  }
+
+  /* 內文共用 */
+  .intro p, .p-body p { font-size: 1.05rem; color: #3a4250; margin: 0 0 1.1em; }
+  .intro p:first-child {
+    font-family: var(--serif); font-size: 1.2rem; color: var(--text); font-weight: 600;
+    text-align: center; margin-bottom: 2em;
+  }
+  .pull {
+    font-family: var(--serif); font-size: clamp(1.2rem, 3.6vw, 1.45rem) !important; font-weight: 600;
+    color: var(--navy) !important; text-align: center; line-height: 1.6;
+    margin: 1.6em 0 !important; padding: 0.9em 0.5em;
+    border-block: 1px solid var(--line); position: relative;
+  }
+  .pull::before {
+    content: '✦'; position: absolute; top: -0.7em; left: 50%; transform: translateX(-50%);
+    background: var(--bg); color: var(--accent); padding: 0 10px; font-size: 0.8rem;
+  }
+
+  /* 目錄 */
+  .toc-wrap { padding: 48px 0; background: var(--bg-elev); border-block: 1px solid var(--line); }
+  .toc { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .toc a {
+    display: flex; align-items: baseline; gap: 12px; padding: 12px 16px;
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; color: var(--text);
+    transition: border-color .2s;
+  }
+  .toc a:hover { border-color: var(--accent); text-decoration: none; }
+  .toc-no { font-family: var(--serif); font-size: 1.3rem; color: var(--accent); font-weight: 600; min-width: 1.6em; font-variant-numeric: lining-nums; }
+
+  /* 理念段落 */
+  .principle { scroll-margin-top: 68px; }
+  .principle.alt { background: var(--bg-elev); }
+  .p-head { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 28px; }
+  .p-no {
+    font-family: var(--serif); font-size: clamp(3rem, 10vw, 4.4rem); line-height: 0.9; font-weight: 500;
+    color: var(--accent); flex-shrink: 0; padding-right: 20px; border-right: 1px solid var(--accent);
+    font-variant-numeric: lining-nums;
+  }
+  .p-head h2 { font-size: clamp(1.35rem, 4.2vw, 1.9rem); margin: 0 0 6px; text-wrap: balance; }
+  .p-sub, .p-close, .pull, .intro p:first-child { text-wrap: balance; }
+  .p-sub { margin: 0; color: var(--accent-text); font-family: var(--serif); font-size: 1.08rem; letter-spacing: 0.04em; }
+
+  .whisper {
+    margin: 1.6em 0; padding: 1.2em 1.4em; border-left: 2px solid var(--accent);
+    background: linear-gradient(90deg, rgba(176, 142, 97, 0.1), transparent);
+  }
+  .whisper p { font-family: var(--serif); font-style: italic; color: var(--text) !important; margin: 0 0 0.5em !important; }
+  .whisper p:last-child { margin-bottom: 0 !important; }
+
+  .costs { list-style: none; padding: 0; margin: 1.4em 0 1.8em; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .costs li { background: var(--bg-card); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 16px 18px; }
+  .costs strong { display: block; font-family: var(--serif); font-size: 1.12rem; color: var(--navy); margin-bottom: 4px; }
+  .costs span { color: var(--text-dim); font-size: 0.95rem; }
+
+  .p-close {
+    margin: 1.8em 0 0 !important; padding: 1.1em 1.3em; border-radius: 10px;
+    background: var(--navy); color: #f4efe5 !important;
+    font-family: var(--serif); font-weight: 600; font-size: 1.12rem !important; line-height: 1.7;
+  }
+
+  /* 結語 */
+  .closing { padding: clamp(64px, 10vw, 104px) 0; border-top: 1px solid var(--line); }
+  .closing-mark { width: 120px; height: auto; margin: 0 auto 16px; }
+  .closing h2 { font-size: clamp(1.4rem, 4.6vw, 2rem); margin: 0 0 20px; word-break: keep-all; }
+  .closing .sep { color: var(--accent); }
+  .mottos { display: flex; flex-direction: column; gap: 4px; font-family: var(--serif); font-size: clamp(1.1rem, 3.4vw, 1.3rem); color: var(--accent-text); margin: 0 0 28px; }
+  .final { color: var(--text-dim); font-size: 1.05rem; max-width: 34em; margin: 0 auto 32px; word-break: keep-all; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 560px) {
+    /* 手機：編號在上、標題在下，避免標題被擠到斷行 */
+    .p-head { flex-direction: column; gap: 10px; }
+    .p-no { font-size: 2.6rem; padding: 0 0 8px; border-right: 0; border-bottom: 1px solid var(--accent); }
+    .toc { grid-template-columns: 1fr; }
+    .whisper { padding: 1em 1.1em; }
+    .closing h2 .sep { display: none; }
+    .closing h2 span { display: block; }
+  }
 </style>
