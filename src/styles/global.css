@@ -28,7 +28,7 @@ body {
 a { color: var(--accent-text); text-decoration: none; }
 a:hover { text-decoration: underline; }
 img { max-width: 100%; display: block; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.3; letter-spacing: 0.04em; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.3; letter-spacing: 0.04em; font-variant-numeric: lining-nums; }
 
 .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
 .section { padding: 72px 0; }
@@ -72,3 +72,7 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-sha
   background: var(--bg-elev); color: var(--text-dim); border-radius: 0 8px 8px 0;
 }
 .prose blockquote p { margin: 0; }
+
+/* 劇本標記：新上架／熱門 */
+.tag.badge.new { background: var(--navy); border-color: var(--navy); color: #fff; }
+.tag.badge.hot { background: #a2453a; border-color: #a2453a; color: #fff; }

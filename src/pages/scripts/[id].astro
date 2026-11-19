@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import { site } from '../../data/site';
 
 export async function getStaticPaths() {
   const scripts = await getCollection('scripts', (s) => s.data.status !== '已下架');
@@ -10,15 +11,17 @@ export async function getStaticPaths() {
 const { script } = Astro.props;
 const d = script.data;
 const { Content } = await render(script);
+const hasBody = (script.body ?? '').trim().length > 0;
 const allHosts = await getCollection('hosts');
 const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 ---
-<Base title={d.title} description={d.tagline}>
+<Base title={d.title} description={`${d.tagline}｜${d.players}・${d.duration}`}>
   <article class="section">
     <div class="container narrow">
       <a href="/scripts/" class="back">← 劇本總覽</a>
       <div class="tags">
         {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+        {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
         {d.genre.map((g) => <span class="tag">{g}</span>)}
       </div>
       <h1>{d.title}</h1>
@@ -26,16 +29,20 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 
       <dl class="facts">
         <div><dt>人數</dt><dd>{d.players}</dd></div>
-        <div><dt>時長</dt><dd>{d.duration}</dd></div>
-        <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>
+        <div><dt>平均時長</dt><dd>{d.duration}</dd></div>
+        {d.roles && <div><dt>角色配置</dt><dd>{d.roles}</dd></div>}
+        {d.genderAdvice && <div><dt>玩家性別建議</dt><dd>{d.genderAdvice}</dd></div>}
+        {d.difficulty && <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
         {d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
+        {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
       </dl>
+      {d.adapted && <p class="meta">＊本劇本為繁體中文改編版本（劇本繁化）。</p>}
 
-      <div class="prose"><Content /></div>
+      {hasBody && <div class="prose"><Content /></div>}
 
       {hosts.length > 0 && (
         <section class="hosts">
-          <h2>推薦主持人</h2>
+          <h2>主持人</h2>
           <ul>{hosts.map((h) => <li><a href={`/hosts/#${h.id}`}>{h.data.name}</a><span>{h.data.title}</span></li>)}</ul>
         </section>
       )}
@@ -43,6 +50,10 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
       {d.status === '上架中'
         ? <a href={`/booking/?script=${script.id}`} class="btn solid">預約這個劇本</a>
         : <p class="dim">此劇本{d.status}，敬請期待。</p>}
+
+      <aside class="notes">
+        {site.scriptNotes.map((n) => <p>＊{n}</p>)}
+      </aside>
     </div>
   </article>
 </Base>
@@ -53,15 +64,19 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
   h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 8px 0; }
   .tagline { font-style: italic; color: var(--text-dim); font-size: 1.1rem; }
   .facts {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;
-    margin: 32px 0; padding: 20px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px;
+    margin: 32px 0 8px; padding: 20px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
   }
   .facts dt { color: var(--text-dim); font-size: 0.82rem; }
   .facts dd { margin: 0; font-weight: 600; }
-  .hosts { margin: 40px 0; }
+  .meta { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 24px; }
+  .prose { margin: 24px 0; }
+  .hosts { margin: 32px 0; }
   .hosts h2 { font-size: 1.3rem; }
   .hosts ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
-  .hosts li { padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; }
+  .hosts li { padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; background: var(--bg-card); }
   .hosts li span { color: var(--text-dim); font-size: 0.85rem; }
   .dim { color: var(--text-dim); }
+  .notes { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .notes p { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 6px; }
 </style>

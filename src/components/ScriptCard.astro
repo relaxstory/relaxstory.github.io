@@ -7,14 +7,16 @@ const d = script.data;
 <a href={`/scripts/${script.id}/`} class="card script-card">
   <div class="tags">
     {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+    {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
     {d.genre.map((g) => <span class="tag">{g}</span>)}
   </div>
   <h3>{d.title}</h3>
   <p class="tagline">{d.tagline}</p>
   <dl>
-    <div><dt>人數</dt><dd>{d.players}</dd></div>
+    <div><dt>人數</dt><dd>{d.players}{d.roles && d.roles !== '不限' && <span class="dim">（{d.roles}）</span>}</dd></div>
     <div><dt>時長</dt><dd>{d.duration}</dd></div>
-    <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>
+    {d.difficulty && <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
+    {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
   </dl>
 </a>
 
@@ -25,6 +27,7 @@ const d = script.data;
   .tagline { color: var(--text-dim); margin: 0 0 20px; font-style: italic; }
   dl { margin: 0; display: grid; gap: 4px; font-size: 0.9rem; }
   dl div { display: flex; gap: 12px; }
-  dt { color: var(--text-dim); min-width: 3em; }
+  dt { color: var(--text-dim); min-width: 3em; flex-shrink: 0; }
   dd { margin: 0; }
+  .dim { color: var(--text-dim); }
 </style>
