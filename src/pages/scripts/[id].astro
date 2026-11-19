@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const scripts = await getCollection('scripts', (s) => s.data.status !== '已下架');
+  return scripts.map((script) => ({ params: { id: script.id }, props: { script } }));
+}
+
+const { script } = Astro.props;
+const d = script.data;
+const { Content } = await render(script);
+const allHosts = await getCollection('hosts');
+const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
+---
+<Base title={d.title} description={d.tagline}>
+  <article class="section">
+    <div class="container narrow">
+      <a href="/scripts/" class="back">← 所有劇本</a>
+      <div class="tags">
+        {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+        {d.genre.map((g) => <span class="tag">{g}</span>)}
+      </div>
+      <h1>{d.title}</h1>
+      <p class="tagline">{d.tagline}</p>
+
+      <dl class="facts">
+        <div><dt>人數</dt><dd>{d.players}</dd></div>
+        <div><dt>時長</dt><dd>{d.duration}</dd></div>
+        <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>
+        {d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
+      </dl>
+
+      <div class="prose"><Content /></div>
+
+      {hosts.length > 0 && (
+        <section class="hosts">
+          <h2>推薦主持人</h2>
+          <ul>{hosts.map((h) => <li><a href={`/hosts/#${h.id}`}>{h.data.name}</a><span>{h.data.title}</span></li>)}</ul>
+        </section>
+      )}
+
+      {d.status === '上架中'
+        ? <a href={`/booking/?script=${script.id}`} class="btn solid">預約這個劇本</a>
+        : <p class="dim">此劇本{d.status}，敬請期待。</p>}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .narrow { max-width: 760px; }
+  .back { display: inline-block; margin-bottom: 24px; color: var(--text-dim); }
+  h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 8px 0; }
+  .tagline { font-style: italic; color: var(--text-dim); font-size: 1.1rem; }
+  .facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;
+    margin: 32px 0; padding: 20px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .facts dt { color: var(--text-dim); font-size: 0.82rem; }
+  .facts dd { margin: 0; font-weight: 600; }
+  .stars { color: var(--accent); letter-spacing: 2px; }
+  .hosts { margin: 40px 0; }
+  .hosts h2 { font-size: 1.3rem; }
+  .hosts ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .hosts li { padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; }
+  .hosts li span { color: var(--text-dim); font-size: 0.85rem; }
+  .dim { color: var(--text-dim); }
+</style>

@@ -1,0 +1,52 @@
+---
+const links = [
+  { href: '/scripts/', label: '劇本介紹' },
+  { href: '/hosts/', label: '主持人' },
+  { href: '/#about', label: '關於我們' },
+];
+const path = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="logo">Re: LAX <span>Story LAb</span></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="開啟選單" />
+    <label for="nav-toggle" class="burger" aria-hidden="true"><span></span></label>
+    <nav>
+      {links.map((l) => <a href={l.href} class={path.startsWith(l.href) ? 'active' : ''}>{l.label}</a>)}
+      <a href="/booking/" class="btn solid nav-cta">立即預約</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(15, 13, 12, 0.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: var(--text); }
+  .logo span { color: var(--accent); }
+  .logo:hover { text-decoration: none; }
+  nav { display: flex; align-items: center; gap: 28px; }
+  nav a:not(.btn) { color: var(--text-dim); }
+  nav a:not(.btn):hover, nav a.active { color: var(--text); text-decoration: none; }
+  .nav-cta { padding: 8px 20px; }
+  .nav-toggle, .burger { display: none; }
+
+  @media (max-width: 720px) {
+    .burger { display: block; width: 28px; height: 20px; position: relative; cursor: pointer; }
+    .burger span, .burger::before, .burger::after {
+      content: ''; position: absolute; left: 0; right: 0; height: 2px; background: var(--text);
+    }
+    .burger::before { top: 0; } .burger span { top: 9px; } .burger::after { bottom: 0; }
+    nav {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; gap: 0; padding: 8px 16px 20px;
+      background: var(--bg-elev); border-bottom: 1px solid var(--line);
+    }
+    nav a:not(.btn) { padding: 12px 0; width: 100%; border-bottom: 1px solid var(--line); }
+    .nav-cta { margin-top: 16px; }
+    .nav-toggle:checked ~ nav { display: flex; }
+  }
+</style>

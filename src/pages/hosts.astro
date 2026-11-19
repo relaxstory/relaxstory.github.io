@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const hosts = (await getCollection('hosts')).sort((a, b) => a.data.order - b.data.order);
+const scripts = await getCollection('scripts', (s) => s.data.status !== '已下架');
+const rendered = await Promise.all(hosts.map(async (h) => ({
+  host: h,
+  Content: (await render(h)).Content,
+  scripts: scripts.filter((s) => s.data.hosts.includes(h.id)),
+})));
+---
+<Base title="主持人介紹" description="認識 Re: LAX Story LAb 的主持人團隊。">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Game Masters</p>
+      <h1 class="section-title">主持人介紹</h1>
+      <p class="section-sub">好的主持人，讓故事真正活起來。</p>
+      <div class="list">
+        {rendered.map(({ host, Content, scripts }) => (
+          <article class="card host" id={host.id}>
+            <div class="avatar">
+              {host.data.avatar
+                ? <img src={host.data.avatar} alt={host.data.name} loading="lazy" />
+                : <span>{host.data.name.slice(0, 1)}</span>}
+            </div>
+            <div>
+              <h2>{host.data.name}</h2>
+              <p class="role">{host.data.title}</p>
+              <div>{host.data.style.map((s) => <span class="tag">{s}</span>)}</div>
+              <div class="prose"><Content /></div>
+              {scripts.length > 0 && (
+                <p class="dim">主持劇本：{scripts.map((s, i) => <>{i > 0 && '、'}<a href={`/scripts/${s.id}/`}>{s.data.title}</a></>)}</p>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list { display: grid; gap: 24px; }
+  .host { display: grid; grid-template-columns: 120px 1fr; gap: 28px; align-items: start; }
+  .host:hover { transform: none; }
+  .avatar {
+    width: 120px; height: 120px; border-radius: 50%; overflow: hidden;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    display: grid; place-items: center; font-family: var(--serif); font-size: 3rem; color: var(--bg);
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  h2 { margin: 0; font-size: 1.6rem; }
+  .role { color: var(--accent); margin: 0 0 12px; }
+  .prose { margin-top: 12px; }
+  .dim { color: var(--text-dim); font-size: 0.92rem; }
+  @media (max-width: 560px) {
+    .host { grid-template-columns: 1fr; gap: 16px; }
+    .avatar { width: 88px; height: 88px; font-size: 2.2rem; }
+  }
+</style>

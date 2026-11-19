@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+// 預約系統將於後續開發（需要資料庫與後台管理）。
+// 目前先提供聯絡管道，讓客人可以透過 LINE / 電話預約。
+---
+<Base title="預約" description="預約 Re: LAX Story LAb 劇本殺場次。">
+  <section class="section">
+    <div class="container narrow">
+      <p class="eyebrow">Booking</p>
+      <h1 class="section-title">預約場次</h1>
+      <div class="card notice">
+        <h2>線上預約系統即將推出</h2>
+        <p>目前請透過以下方式與我們聯繫預約，告訴我們想玩的劇本、人數與時段：</p>
+        <!-- 請替換成實際聯絡方式 -->
+        <ul>
+          <li>LINE 官方帳號：（待填寫）</li>
+          <li>電話：（待填寫）</li>
+          <li>Instagram 私訊：（待填寫）</li>
+        </ul>
+        <p id="picked" class="picked" hidden></p>
+        <a href="/scripts/" class="btn">先去看看劇本</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // 從劇本頁點「預約這個劇本」進來時，顯示所選劇本
+  const id = new URLSearchParams(location.search).get('script');
+  const el = document.getElementById('picked');
+  if (id && el) {
+    el.textContent = `你選擇的劇本代號：${id}（聯繫時請一併告知）`;
+    el.hidden = false;
+  }
+</script>
+
+<style>
+  .narrow { max-width: 760px; }
+  .notice:hover { transform: none; }
+  .notice h2 { margin-top: 0; color: var(--accent); }
+  .picked { padding: 10px 14px; background: var(--bg-elev); border-radius: 8px; }
+</style>

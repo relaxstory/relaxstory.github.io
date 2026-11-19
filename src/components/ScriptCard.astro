@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { script: CollectionEntry<'scripts'>; }
+const { script } = Astro.props;
+const d = script.data;
+---
+<a href={`/scripts/${script.id}/`} class="card script-card">
+  <div class="tags">
+    {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+    {d.genre.map((g) => <span class="tag">{g}</span>)}
+  </div>
+  <h3>{d.title}</h3>
+  <p class="tagline">{d.tagline}</p>
+  <dl>
+    <div><dt>人數</dt><dd>{d.players}</dd></div>
+    <div><dt>時長</dt><dd>{d.duration}</dd></div>
+    <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>
+  </dl>
+</a>
+
+<style>
+  .script-card { display: block; color: var(--text); }
+  .script-card:hover { text-decoration: none; }
+  h3 { margin: 8px 0 4px; font-size: 1.4rem; }
+  .tagline { color: var(--text-dim); margin: 0 0 20px; font-style: italic; }
+  dl { margin: 0; display: grid; gap: 4px; font-size: 0.9rem; }
+  dl div { display: flex; gap: 12px; }
+  dt { color: var(--text-dim); min-width: 3em; }
+  dd { margin: 0; }
+  .stars { color: var(--accent); letter-spacing: 2px; }
+</style>

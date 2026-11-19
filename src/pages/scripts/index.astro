@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import ScriptCard from '../../components/ScriptCard.astro';
+import { getCollection } from 'astro:content';
+
+const scripts = (await getCollection('scripts', (s) => s.data.status !== '已下架'))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="劇本介紹" description="Re: LAX Story LAb 所有上架與即將推出的劇本殺劇本。">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Scripts</p>
+      <h1 class="section-title">劇本介紹</h1>
+      <p class="section-sub">點選劇本查看完整介紹、人數與推薦主持人。</p>
+      <div class="grid">{scripts.map((s) => <ScriptCard script={s} />)}</div>
+    </div>
+  </section>
+</Base>
