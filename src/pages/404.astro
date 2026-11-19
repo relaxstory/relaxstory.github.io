@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="找不到頁面">
+  <section class="section center">
+    <div class="container">
+      <p class="eyebrow">404</p>
+      <h1 class="section-title">這一頁不在館藏裡</h1>
+      <p class="section-sub">你要找的頁面可能已經移動或不存在。</p>
+      <div class="actions">
+        <a href="/" class="btn solid">回到首頁</a>
+        <a href="/scripts/" class="btn">劇本總覽</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .section { padding: 120px 0; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>

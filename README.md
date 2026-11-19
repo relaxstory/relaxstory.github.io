@@ -41,7 +41,9 @@ npm run build    # 產生正式網站到 dist/
 - [ ] 替換所有「範例內容」與「（待填寫）」的聯絡資訊
 - [ ] 加入劇本封面圖、主持人照片
 - [ ] 設定 `astro.config.mjs` 的 `site` 為正式網域
-- [ ] 部署（Cloudflare Pages / Netlify / Vercel，連 GitHub 自動部署）
+- [ ] 部署：Cloudflare Pages（連 GitHub 自動部署）
+  - Framework preset：Astro｜Build command：`npm run build`｜Output directory：`dist`
+  - Node 版本由 `.node-version` 指定（22）
 - [ ] **預約系統（第二階段）**：場次時段、線上預約表單、後台管理、資料庫
   - 建議方向：Astro SSR + Supabase（資料庫＋登入權限），或 Next.js
   - 後台帳號、資料庫金鑰一律放在部署平台的環境變數，不進 repo
