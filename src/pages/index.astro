@@ -27,8 +27,8 @@ const scripts = (await getCollection('scripts', (s) => s.data.status !== '已下
     <div class="container center philosophy">
       <p class="eyebrow">Our Philosophy</p>
       <h2 class="section-title">工作室理念</h2>
-      <p>我們相信，每一段故事都值得被用心呈現，<br class="br-wide" />每一次相遇都值得被珍藏。</p>
-      <p>在 Re:LAX Story Lab，我們以專業承載故事，以細節創造沉浸，<br class="br-wide" />讓每一位走進故事的人，都能帶走一段不只存在於劇本裡的回憶。</p>
+      <p><span>我們相信，</span><span>每一段故事都值得被用心呈現，</span><span>每一次相遇都值得被珍藏。</span></p>
+      <p><span>在 Re:LAX Story Lab，</span><span>我們以專業承載故事，</span><span>以細節創造沉浸，</span><span>讓每一位走進故事的人，</span><span>都能帶走一段</span><span>不只存在於劇本裡的回憶。</span></p>
       <a href="/about/" class="more">了解更多關於我們 →</a>
     </div>
   </section>
@@ -81,9 +81,9 @@ const scripts = (await getCollection('scripts', (s) => s.data.status !== '已下
   .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
   .philosophy { max-width: 720px; }
   .philosophy p:not(.eyebrow) { color: var(--text-dim); font-size: 1.05rem; }
+  .philosophy p span { display: inline-block; } /* 依詞組換行，避免句子在詞中間斷開 */
   .more { display: inline-block; margin-top: 12px; letter-spacing: 0.05em; }
   .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
   .head .section-title { margin: 0; }
   .contact-wrap { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
-  @media (max-width: 640px) { .br-wide { display: none; } }
 </style>
