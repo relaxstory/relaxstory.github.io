@@ -7,7 +7,7 @@ duration: 約 3.5 小時
 difficulty: 3
 featured: false
 status: 即將推出
-hosts: [aki]
+hosts: [zhizhi]
 order: 3
 ---
 

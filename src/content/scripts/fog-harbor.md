@@ -8,7 +8,7 @@ difficulty: 4
 price: 每人 NT$ 650
 featured: true
 status: 上架中
-hosts: [aki, mori]
+hosts: [kaike, daidai]
 order: 1
 ---
 

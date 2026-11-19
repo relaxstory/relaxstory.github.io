@@ -1,7 +1,15 @@
 ---
+/*
+ * 主持人介紹頁的排版。
+ * ⚠️ 主持人資料請改 src/content/hosts/ 裡的檔案，不用改這個檔案。
+ */
 import Base from '../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 
+// 依中文標點切成詞組，讓手機換行落在標點後
+const phrases = (t: string) => t.split(/(?<=[，。、；：！？])/);
+// 加上「」並黏在第一段與最後一段，避免引號單獨換行
+const quoted = (t: string) => { const p = phrases(t); p[0] = '「' + p[0]; p[p.length - 1] += '」'; return p; };
 const hosts = (await getCollection('hosts')).sort((a, b) => a.data.order - b.data.order);
 const scripts = await getCollection('scripts', (s) => s.data.status !== '已下架');
 const rendered = await Promise.all(hosts.map(async (h) => ({
@@ -10,52 +18,113 @@ const rendered = await Promise.all(hosts.map(async (h) => ({
   scripts: scripts.filter((s) => s.data.hosts.includes(h.id)),
 })));
 ---
-<Base title="主持人介紹" description="認識 Re:LAX Story Lab 的主持人團隊。">
+<Base title="主持人介紹" description="認識 Re:LAX Story Lab 的館員們——讓故事真正發生的人。">
   <section class="section">
-    <div class="container">
+    <div class="container narrow">
       <p class="eyebrow">Game Masters</p>
       <h1 class="section-title">主持人介紹</h1>
-      <p class="section-sub">好的主持人，讓故事真正活起來。</p>
+      <p class="section-sub">認識館裡的館員們——讓故事真正發生的人。</p>
+
       <div class="list">
-        {rendered.map(({ host, Content, scripts }) => (
-          <article class="card host" id={host.id}>
-            <div class="avatar">
-              {host.data.avatar
-                ? <img src={host.data.avatar} alt={host.data.name} loading="lazy" />
-                : <span>{host.data.name.slice(0, 1)}</span>}
-            </div>
-            <div>
-              <h2>{host.data.name}</h2>
-              <p class="role">{host.data.title}</p>
-              <div>{host.data.style.map((s) => <span class="tag">{s}</span>)}</div>
-              <div class="prose"><Content /></div>
-              {scripts.length > 0 && (
-                <p class="dim">主持劇本：{scripts.map((s, i) => <>{i > 0 && '、'}<a href={`/scripts/${s.id}/`}>{s.data.title}</a></>)}</p>
+        {rendered.map(({ host, Content, scripts }) => {
+          const d = host.data;
+          return (
+            <article class="card host" id={host.id}>
+              <header class="host-head">
+                <div class="avatar">
+                  {d.avatar
+                    ? <img src={d.avatar} alt={d.name} loading="lazy" />
+                    : <span>{d.name.slice(0, 1)}</span>}
+                </div>
+                <div>
+                  <h2>{d.name}</h2>
+                  <p class="role">{d.title}</p>
+                </div>
+              </header>
+
+              {d.quote && <blockquote class="quote">{quoted(d.quote).map((t) => <span>{t}</span>)}</blockquote>}
+
+              <div class="bio"><Content /></div>
+
+              <dl class="traits">
+                {d.style.length > 0 && (
+                  <div><dt>{d.styleLabel}</dt><dd>{d.style.map((s) => <span class="tag">{s}</span>)}</dd></div>
+                )}
+                {d.genres.length > 0 && (
+                  <div><dt>擅長劇本類型</dt><dd>{d.genres.map((g) => <span class="tag genre">{g}</span>)}</dd></div>
+                )}
+              </dl>
+
+              {d.remark && (
+                <p class="remark"><span class="remark-label">{d.remarkLabel}</span><span class="remark-text">{quoted(d.remark).map((t) => <span>{t}</span>)}</span></p>
               )}
-            </div>
-          </article>
-        ))}
+
+              {scripts.length > 0 && (
+                <p class="hosted">主持劇本：{scripts.map((s, i) => <>{i > 0 && '、'}<a href={`/scripts/${s.id}/`} class="nowrap">{s.data.title}</a></>)}</p>
+              )}
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .list { display: grid; gap: 24px; }
-  .host { display: grid; grid-template-columns: 120px 1fr; gap: 28px; align-items: start; }
-  .host:hover { transform: none; }
+  .narrow { max-width: 820px; }
+  .list { display: grid; gap: 28px; }
+  .host { padding: clamp(24px, 5vw, 40px); scroll-margin-top: 84px; }
+
+  .host-head { display: flex; align-items: center; gap: 20px; }
   .avatar {
-    width: 120px; height: 120px; border-radius: 50%; overflow: hidden;
-    background: linear-gradient(135deg, var(--navy), var(--accent));
-    display: grid; place-items: center; font-family: var(--serif); font-size: 3rem; color: #fff;
+    width: 96px; height: 96px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--navy) 30%, var(--accent));
+    display: grid; place-items: center;
+    font-family: 'Noto Serif TC', serif; font-size: 2.6rem; font-weight: 700; color: #f4efe5;
+    box-shadow: 0 0 0 4px var(--bg-card), 0 0 0 5px var(--accent);
   }
   .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  h2 { margin: 0; font-size: 1.6rem; }
-  .role { color: var(--accent-text); margin: 0 0 12px; }
-  .prose { margin-top: 12px; }
-  .dim { color: var(--text-dim); font-size: 0.92rem; }
+  h2 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.1rem); letter-spacing: 0.12em; }
+  .role { margin: 2px 0 0; color: var(--accent-text); letter-spacing: 0.08em; font-size: 0.95rem; }
+
+  .quote {
+    margin: 28px 0 20px; padding: 0 0 0 20px; border-left: 2px solid var(--accent);
+    font-family: var(--serif); font-size: clamp(1.1rem, 3.4vw, 1.3rem); font-weight: 600;
+    color: var(--navy); line-height: 1.7;
+  }
+  .quote span, .remark-text span { display: inline-block; }
+
+  .bio :global(p) { color: #3a4250; margin: 0 0 0.9em; }
+
+  .traits { margin: 24px 0 0; display: grid; gap: 12px; }
+  .traits div { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; align-items: baseline; }
+  .traits dt { color: var(--text-dim); font-size: 0.88rem; letter-spacing: 0.08em; }
+  .traits dd { margin: 0; }
+  .tag { border-color: var(--accent); color: var(--accent-text); background: transparent; }
+  .tag.genre { background: var(--navy); border-color: var(--navy); color: #f4efe5; }
+
+  .remark {
+    margin: 24px 0 0; padding: 14px 18px; border-radius: 10px;
+    background: var(--bg-elev); border: 1px dashed var(--accent);
+    color: var(--text); font-size: 0.98rem;
+  }
+  .remark-label {
+    display: inline-block; margin-right: 10px; padding: 1px 10px; border-radius: 999px;
+    background: var(--accent); color: #fff; font-size: 0.78rem; letter-spacing: 0.1em; vertical-align: 2px;
+  }
+  .nowrap { display: inline-block; }
+  .hosted { margin: 18px 0 0; font-size: 0.9rem; color: var(--text-dim); }
+
   @media (max-width: 560px) {
-    .host { grid-template-columns: 1fr; gap: 16px; }
-    .avatar { width: 88px; height: 88px; font-size: 2.2rem; }
+    .avatar { width: 76px; height: 76px; font-size: 2rem; }
+    .host { padding: 22px 18px; }
+    .quote { padding-left: 14px; }
+    .host-head { gap: 16px; }
+    .traits div { grid-template-columns: 1fr; gap: 4px; }
+    .remark-label { display: table; margin: 0 0 6px; }
+  }
+  @media (max-width: 360px) {
+    .quote { font-size: 1rem; }
+    .remark { padding: 12px; font-size: 0.9rem; }
   }
 </style>

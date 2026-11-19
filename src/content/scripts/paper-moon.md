@@ -8,7 +8,7 @@ difficulty: 2
 price: 每人 NT$ 700
 featured: true
 status: 上架中
-hosts: [mori]
+hosts: [kaike]
 order: 2
 ---
 

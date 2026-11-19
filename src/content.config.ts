@@ -19,15 +19,20 @@ const scripts = defineCollection({
   }),
 });
 
-// 主持人：在 src/content/hosts/ 新增一個 .md 檔
+// 主持人：在 src/content/hosts/ 新增一個 .md 檔（檔名 = 代號，劇本的 hosts 欄位用這個代號）
 const hosts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/hosts' }),
   schema: z.object({
-    name: z.string(),
-    title: z.string(),        // 稱號／定位
-    style: z.array(z.string()),
-    avatar: z.string().optional(), // 放在 public/ 的圖片路徑，例 /hosts/aki.jpg
-    order: z.number().default(99),
+    name: z.string(),                       // 名字
+    title: z.string(),                      // 稱號｜定位，例：館長｜GM / NPC
+    quote: z.string().optional(),           // 代表語錄（不用加引號）
+    styleLabel: z.string().default('主持風格'), // 風格標籤的標題，可改成「演繹風格」等
+    style: z.array(z.string()).default([]),
+    genres: z.array(z.string()).default([]),   // 擅長劇本類型
+    remarkLabel: z.string().default('館長評語'),
+    remark: z.string().optional(),          // 館長評語（不用加引號）
+    avatar: z.string().optional(),          // 照片：放在 public/hosts/，填 /hosts/檔名.jpg
+    order: z.number().default(99),          // 排序，數字小的在前
   }),
 });
 
