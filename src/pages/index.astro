@@ -4,10 +4,12 @@ import ScriptCard from '../components/ScriptCard.astro';
 import Contact from '../components/Contact.astro';
 import { getCollection } from 'astro:content';
 
-// 首頁精選劇本：依 order 排序取前 3 部（已下架不顯示）
-const scripts = (await getCollection('scripts', (s) => s.data.status !== '已下架'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+// 首頁精選劇本：自動顯示 featured: true 的劇本（依 order 排序，最多 6 部）。
+// 都沒勾選時，改顯示排序最前面的 3 部，首頁不會空白。
+const all = (await getCollection('scripts', (s) => s.data.status !== '已下架'))
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = all.filter((s) => s.data.featured);
+const scripts = featured.length ? featured.slice(0, 6) : all.slice(0, 3);
 ---
 <Base>
   <!-- 主視覺 -->

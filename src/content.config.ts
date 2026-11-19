@@ -13,6 +13,7 @@ const scripts = defineCollection({
     difficulty: z.number().min(1).max(5), // 推理難度 1–5
     price: z.string().optional(),
     status: z.enum(['上架中', '即將推出', '已下架']).default('上架中'),
+    featured: z.boolean().default(false),  // true = 顯示在首頁「精選劇本」
     hosts: z.array(z.string()).default([]), // 對應 hosts 的檔名（id）
     order: z.number().default(99),
   }),

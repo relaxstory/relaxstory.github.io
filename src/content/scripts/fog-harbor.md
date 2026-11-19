@@ -6,6 +6,7 @@ players: 6 人（3 男 3 女，可反串）
 duration: 約 4 小時
 difficulty: 4
 price: 每人 NT$ 650
+featured: true
 status: 上架中
 hosts: [aki, mori]
 order: 1

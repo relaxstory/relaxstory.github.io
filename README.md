@@ -29,6 +29,7 @@ npm run build    # 產生正式網站到 dist/
 
 - **劇本**：在 `src/content/scripts/` 新增一個 `.md` 檔，檔名就是網址（例 `fog-harbor.md` → `/scripts/fog-harbor/`）。
   欄位說明見 `src/content.config.ts`。`status` 設為 `已下架` 即可隱藏。
+  `featured: true` 會自動顯示在首頁「精選劇本」（最多 6 部，依 `order` 排序）。
 - **主持人**：在 `src/content/hosts/` 新增 `.md` 檔。照片放到 `public/hosts/`，並在 `avatar` 填 `/hosts/檔名.jpg`。
 - 劇本的 `hosts` 欄位填主持人的檔名（不含 `.md`），兩邊會自動互相連結。
 

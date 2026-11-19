@@ -6,6 +6,7 @@ players: 5 人（2 男 3 女）
 duration: 約 5 小時
 difficulty: 2
 price: 每人 NT$ 700
+featured: true
 status: 上架中
 hosts: [mori]
 order: 2

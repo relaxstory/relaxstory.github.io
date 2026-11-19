@@ -5,6 +5,7 @@ genre: [科幻, 陣營對抗]
 players: 7 人（不限性別）
 duration: 約 3.5 小時
 difficulty: 3
+featured: false
 status: 即將推出
 hosts: [aki]
 order: 3
