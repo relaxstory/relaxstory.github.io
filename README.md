@@ -30,13 +30,11 @@ npm run build    # 產生正式網站到 dist/
 - **聯絡資訊、標語**：改 `src/data/site.ts`，全站一起更新。
 - **Logo**：放在 `public/brand/`（原始檔 `logo-original.webp`）。網站配色取自 Logo，定義在 `src/styles/global.css` 開頭。
 
-- **劇本**：在 `src/content/scripts/` 新增一個 `.md` 檔，檔名就是網址（例 `fog-harbor.md` → `/scripts/fog-harbor/`）。
-  欄位說明見 `src/content.config.ts`。`status` 設為 `已下架` 即可隱藏。
-  `featured: true` 會自動顯示在首頁「精選劇本」（最多 6 部，依 `order` 排序）。
-  劇本詳細頁底部的說明（角色配置、性別友善）在 `src/data/site.ts` 的 `scriptNotes`。
+- **劇本**：在預約系統的 Google 試算表（`scripts` 分頁）編輯，改完按試算表選單「Re:LAX → 🔄 更新官網」，或等每天 04:13 自動更新。
+  `featured` 為 TRUE 的劇本會顯示在首頁精選（最多 6 部）。劇本詳細頁底部的說明在 `src/data/site.ts` 的 `scriptNotes`。
 - **主持人**：在 `src/content/hosts/` 新增 `.md` 檔（可複製 `kaike.md` 修改）。欄位：名字、稱號、語錄、風格、擅長類型、館長評語；`---` 下方是介紹文字。
   照片放到 `public/hosts/`，並在 `avatar` 填 `/hosts/檔名.jpg`；沒有照片時顯示名字第一個字。
-- 劇本的 `hosts` 欄位填主持人的檔名（不含 `.md`），兩邊會自動互相連結。
+- 試算表的 `hosts` 欄填主持人的檔名（不含 `.md`，例：`kaike`），兩邊會自動互相連結。
 
 ## 待辦
 

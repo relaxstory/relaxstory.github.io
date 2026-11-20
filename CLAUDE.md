@@ -12,7 +12,7 @@ Re:LAX Story Lab（雷凱斯故事實驗室）劇本殺工作室官網。Astro �
 
 - 根網址屬於官網，`/booking/` 屬於預約系統：**官網不可建立 `/booking/` 路徑的頁面**。
 - 全站預約按鈕讀 `src/data/site.ts` 的 `bookingUrl`（目前 `'/booking/'`；預約系統暫停時可改回 `'/reservation/'`，該頁只有 IG 聯絡方式）。
-- **劇本 id 兩邊共用**：`src/content/scripts/<id>.md` 的檔名 = 預約系統 Sheet `scripts` 的 `id`。新增劇本時用同一個 id。
+- **劇本資料不在本 repo**：唯一主資料是預約系統 Google Sheet 的 `scripts` 分頁。建置時由 `src/lib/catalogLoader.ts` 讀取 `GET ?action=catalog`；讀不到時改用 `src/data/catalog.snapshot.json`（GitHub Actions 會顯示 warning）。劇本 id 即網址代號（例：`/scripts/chutao-lianticun/`）。
 - 外觀兩邊一致；調整配色、字型、Logo 時一併考慮預約系統（其樣式在 `relaxstory/booking` 的 `frontend/src/style.css`）。
 
 ## 內容放哪裡（使用者會自己在 GitHub 網頁上編輯，保持這些檔案好讀）
@@ -20,14 +20,15 @@ Re:LAX Story Lab（雷凱斯故事實驗室）劇本殺工作室官網。Astro �
 | 內容 | 檔案 |
 |---|---|
 | 店名、標語、聯絡方式、預約連結、劇本頁說明、價格顯示開關（`showPrice`，目前 false） | `src/data/site.ts` |
-| 劇本 | `src/content/scripts/*.md`（欄位定義在 `src/content.config.ts`） |
+| 劇本 | **預約系統試算表 `scripts` 分頁**（改完按試算表選單「Re:LAX → 🔄 更新官網」，或等每日 04:13 自動更新）；網站欄位對應在 `src/lib/catalogLoader.ts` |
 | 主持人 | `src/content/hosts/*.md`（`kaike` 凱克、`daidai` 玳玳、`zhizhi` 芝芝） |
 | 關於我們 | `src/content/about.md`（簡易符號標記，規則寫在檔案開頭；解析器 `src/lib/parseAbout.ts`） |
 | 首頁工作室理念 | `src/pages/index.astro` |
 | Logo、favicon | `public/brand/`、`public/favicon.png` |
 
-- 劇本資料來源是店主的公開 Google Sheet「劇本列表」分頁；試算表沒有的資訊（價格、難度、介紹）不要自己編，先問使用者。
-- `featured: true` 的劇本顯示在首頁精選（最多 6 部）。
+- 劇本內容由店主在試算表填寫；試算表沒有的資訊（價格、難度、介紹）不要自己編，先問使用者。
+- `catalog.snapshot.json` 只是備援：試算表欄位有變動時，可在 relaxstory/booking 用後端測試環境重新產生（見該 repo 的 CLAUDE.md）。
+- 試算表 `featured` 勾選 TRUE 的劇本顯示在首頁精選（最多 6 部）。
 
 ## 不要動／注意
 
@@ -41,7 +42,7 @@ Re:LAX Story Lab（雷凱斯故事實驗室）劇本殺工作室官網。Astro �
 
 ```bash
 npm ci
-npm run build      # 應產生 12 頁左右，無錯誤或警告
+npm run build      # 應產生 12 頁左右；雲端環境連不到 Apps Script，會出現「改用 snapshot」的 warning，屬正常
 npm run preview    # http://localhost:4321/
 ```
 

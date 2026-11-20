@@ -1,10 +1,15 @@
 name: Deploy to GitHub Pages
 
-# push 到 main 後自動建置並部署到 https://relaxstory.github.io/
+# 何時重新建置並部署到 https://relaxstory.github.io/ ：
+#   - push 到 main
+#   - 試算表選單「Re:LAX → 🔄 更新官網」（workflow_dispatch）
+#   - 每天台灣時間 04:13 自動一次（重新讀取試算表的劇本目錄）
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '13 20 * * *'
 
 permissions:
   contents: read

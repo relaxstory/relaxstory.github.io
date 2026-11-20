@@ -1,0 +1,173 @@
+{
+  "ok": true,
+  "scripts": [
+    {
+      "id": "chutao-lianticun",
+      "name": "出逃連體村",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": true,
+      "sort_order": 1,
+      "badge": "新上架",
+      "tagline": "沒想到在推理本有戀陪吧",
+      "genres": [
+        "推理",
+        "還原",
+        "戀陪"
+      ],
+      "players": 5,
+      "duration_min": 270,
+      "male": 1,
+      "female": 4,
+      "gender_advice": "1女1男",
+      "series": "",
+      "adapted": true,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    },
+    {
+      "id": "tongliu-hewu",
+      "name": "同流合屋",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": false,
+      "sort_order": 2,
+      "badge": "新上架",
+      "tagline": "玩完之後有東西回不去了",
+      "genres": [
+        "還原",
+        "歡樂",
+        "吃瓜"
+      ],
+      "players": 5,
+      "duration_min": 180,
+      "male": 3,
+      "female": 2,
+      "gender_advice": "不限",
+      "series": "牛鬼蛇神系列",
+      "adapted": true,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    },
+    {
+      "id": "yaomo-guiguai",
+      "name": "妖魔鬼怪",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": false,
+      "sort_order": 3,
+      "badge": "新上架",
+      "tagline": "丹丹好吃",
+      "genres": [
+        "還原",
+        "歡樂",
+        "吃瓜"
+      ],
+      "players": 5,
+      "duration_min": 180,
+      "male": 3,
+      "female": 2,
+      "gender_advice": "不限",
+      "series": "牛鬼蛇神系列",
+      "adapted": true,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    },
+    {
+      "id": "zuolao-chaonengzhe",
+      "name": "坐牢の超能者殺人日常",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": false,
+      "sort_order": 4,
+      "badge": null,
+      "tagline": "超能力當然是用來殺人呀",
+      "genres": [
+        "推理",
+        "歡樂",
+        "中二"
+      ],
+      "players": 5,
+      "duration_min": 150,
+      "male": 5,
+      "female": 0,
+      "gender_advice": "不限",
+      "series": "超能宇宙系列",
+      "adapted": false,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    },
+    {
+      "id": "diesu",
+      "name": "蝶溯",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": true,
+      "sort_order": 5,
+      "badge": null,
+      "tagline": "交錯的人生，但只愛你一人",
+      "genres": [
+        "推理",
+        "還原",
+        "沉浸"
+      ],
+      "players": 5,
+      "duration_min": 210,
+      "male": 2,
+      "female": 3,
+      "gender_advice": "3女2男",
+      "series": "",
+      "adapted": false,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    },
+    {
+      "id": "half-world-deduction",
+      "name": "1/2世界推理法則",
+      "site_status": "上架中",
+      "bookable": true,
+      "featured": true,
+      "sort_order": 6,
+      "badge": "熱門",
+      "tagline": "有瓜吃瓜，邊推邊吃",
+      "genres": [
+        "推理",
+        "建築",
+        "城限"
+      ],
+      "players": 6,
+      "duration_min": 420,
+      "male": null,
+      "female": null,
+      "gender_advice": "不限",
+      "series": "",
+      "adapted": false,
+      "difficulty": null,
+      "hosts": [
+        "kaike"
+      ],
+      "price": null,
+      "description": ""
+    }
+  ]
+}

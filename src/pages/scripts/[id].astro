@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { site } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -10,8 +10,8 @@ export async function getStaticPaths() {
 
 const { script } = Astro.props;
 const d = script.data;
-const { Content } = await render(script);
-const hasBody = (script.body ?? '').trim().length > 0;
+// 介紹：空行分段，段內換行保留
+const paragraphs = d.description.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 const allHosts = await getCollection('hosts');
 const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 ---
@@ -38,7 +38,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
       </dl>
       {d.adapted && <p class="meta">＊本劇本已完成繁體中文化編排。</p>}
 
-      {hasBody && <div class="prose"><Content /></div>}
+      {paragraphs.length > 0 && <div class="prose">{paragraphs.map((p) => <p>{p}</p>)}</div>}
 
       {hosts.length > 0 && (
         <section class="hosts">
@@ -47,9 +47,9 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
         </section>
       )}
 
-      {d.status === '上架中'
+      {d.status === '上架中' && d.bookable
         ? <a href={`${site.bookingUrl}?script=${script.id}`} class="btn solid">預約這個劇本</a>
-        : <p class="dim">此劇本{d.status}，敬請期待。</p>}
+        : <p class="dim">{d.status === '即將推出' ? '此劇本即將推出，敬請期待。' : '此劇本目前暫停預約，歡迎透過 Instagram 詢問。'}</p>}
 
       <aside class="notes">
         {site.scriptNotes.map((n) => <p>＊{n}</p>)}
@@ -71,6 +71,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
   .facts dd { margin: 0; font-weight: 600; }
   .meta { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 24px; }
   .prose { margin: 24px 0; }
+  .prose p { white-space: pre-line; color: #3a4250; }
   .hosts { margin: 32px 0; }
   .hosts h2 { font-size: 1.3rem; }
   .hosts ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }

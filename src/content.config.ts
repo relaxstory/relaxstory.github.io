@@ -1,26 +1,30 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { catalogLoader } from './lib/catalogLoader';
 
-// 劇本：在 src/content/scripts/ 新增一個 .md 檔就會出現一個劇本（檔名 = 網址代號）
+// 劇本：資料來自預約系統的 Google 試算表（scripts 分頁），不在這個 repo 裡編輯。
+// 改劇本 → 改試算表 → 試算表選單「Re:LAX → 🔄 更新官網」（或等每日自動更新）。
 const scripts = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/scripts' }),
+  loader: catalogLoader(),
   schema: z.object({
     title: z.string(),
-    tagline: z.string(),                        // 一句話簡介
-    genre: z.array(z.string()),                 // 類型標籤，例：[推理, 還原]
-    players: z.string(),                        // 人數，例：'5 人'
-    roles: z.string().optional(),               // 角色配置，例：'4 女 1 男'、'不限'
-    genderAdvice: z.string().optional(),        // 玩家性別建議，例：'1 女 1 男'、'不限'
-    duration: z.string(),                       // 平均時長，例：'約 4.5 小時'
-    difficulty: z.number().min(1).max(5).optional(), // 推理難度 1–5（可不填）
-    price: z.coerce.string().nullish(),         // 價格，例：每人 NT$ 500（是否顯示由 site.ts 的 showPrice 控制）
-    series: z.string().optional(),              // 系列，例：'牛鬼蛇神系列'
-    badge: z.enum(['新上架', '熱門']).optional(), // 標記
-    adapted: z.boolean().default(false),        // true = 劇本繁化
-    featured: z.boolean().default(false),       // true = 顯示在首頁「精選劇本」
+    tagline: z.string(),
+    genre: z.array(z.string()),
+    players: z.string(),                         // '5 人'
+    roles: z.string().optional(),                // 角色配置：'4 女 1 男'、'不限'
+    genderAdvice: z.string().optional(),         // 玩家性別建議
+    duration: z.string(),                        // '約 4.5 小時'
+    difficulty: z.number().min(1).max(5).optional(),
+    price: z.string().optional(),                // 是否顯示由 site.ts 的 showPrice 控制
+    series: z.string().optional(),
+    badge: z.enum(['新上架', '熱門']).optional(),
+    adapted: z.boolean().default(false),
+    featured: z.boolean().default(false),        // 首頁精選
     status: z.enum(['上架中', '即將推出', '已下架']).default('上架中'),
-    hosts: z.array(z.string()).default([]),     // 主持人代號（hosts 資料夾的檔名）
-    order: z.number().default(99),              // 排序，數字小的在前
+    bookable: z.boolean().default(true),         // 預約系統是否開放預約此劇本
+    hosts: z.array(z.string()).default([]),
+    order: z.number().default(999),
+    description: z.string().default(''),         // 劇本介紹（儲存格內換行即分段）
   }),
 });
 
