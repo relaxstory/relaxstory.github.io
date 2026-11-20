@@ -12,7 +12,6 @@ const d = script.data;
       {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
       {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
       {d.genre.map((g) => <span class="tag">{g}</span>)}
-      {d.crossplay && <span class="stamp">可反串</span>}
     </div>
     <h3>{d.title}</h3>
     <p class="tagline">{d.tagline}</p>
@@ -39,7 +38,6 @@ const d = script.data;
   dd { margin: 0; }
   .dim { color: var(--text-dim); }
   .nowrap { white-space: nowrap; }
-  .tags .stamp { margin: 0 0 6px 2px; }
 
   /* 手機：縮圖在左、文字在右，避免一張卡片太長 */
   @media (max-width: 560px) {

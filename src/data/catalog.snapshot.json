@@ -33,8 +33,7 @@
       "suits": [],
       "experience": "",
       "reading_load": "",
-      "curator_note": "",
-      "crossplay": false
+      "curator_note": ""
     },
     {
       "id": "tongliu-hewu",
@@ -68,8 +67,7 @@
       "suits": [],
       "experience": "",
       "reading_load": "",
-      "curator_note": "",
-      "crossplay": false
+      "curator_note": ""
     },
     {
       "id": "yaomo-guiguai",
@@ -103,8 +101,7 @@
       "suits": [],
       "experience": "",
       "reading_load": "",
-      "curator_note": "",
-      "crossplay": false
+      "curator_note": ""
     },
     {
       "id": "zuolao-chaonengzhe",
@@ -138,8 +135,7 @@
       "suits": [],
       "experience": "",
       "reading_load": "",
-      "curator_note": "",
-      "crossplay": false
+      "curator_note": ""
     },
     {
       "id": "diesu",
@@ -153,7 +149,8 @@
       "genres": [
         "推理",
         "還原",
-        "沉浸"
+        "沉浸",
+        "可反串"
       ],
       "players": 5,
       "duration_min": 210,
@@ -179,8 +176,7 @@
       ],
       "experience": "新手可",
       "reading_load": "6000字／共同資訊多",
-      "curator_note": "平行時空的設定雖然已經在許多故事中被使用了，但這種命運的交錯感依然讓人難忘呢……",
-      "crossplay": true
+      "curator_note": "平行時空的設定雖然已經在許多故事中被使用了，但這種命運的交錯感依然讓人難忘呢……"
     },
     {
       "id": "half-world-deduction",
@@ -214,8 +210,7 @@
       "suits": [],
       "experience": "",
       "reading_load": "",
-      "curator_note": "",
-      "crossplay": false
+      "curator_note": ""
     }
   ]
 }

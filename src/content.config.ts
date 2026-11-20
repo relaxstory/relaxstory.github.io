@@ -31,7 +31,6 @@ const scripts = defineCollection({
     experience: z.string().optional(),           // 經驗需求
     readingLoad: z.string().optional(),          // 閱讀量
     curatorNote: z.string().optional(),          // 館長筆記
-    crossplay: z.boolean().default(false),       // 可反串
   }),
 });
 
