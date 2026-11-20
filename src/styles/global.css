@@ -76,3 +76,11 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-sha
 /* 劇本標記：新上架／熱門 */
 .tag.badge.new { background: var(--navy); border-color: var(--navy); color: #fff; }
 .tag.badge.hot { background: #a2453a; border-color: #a2453a; color: #fff; }
+
+/* 「可反串」印章（劇本卡片、詳細頁） */
+.stamp {
+  display: inline-block; margin-left: 8px; padding: 0 6px; vertical-align: 1px;
+  border: 1.5px solid #a2453a; border-radius: 3px; color: #a2453a;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; line-height: 1.5;
+  transform: rotate(-4deg); white-space: nowrap;
+}

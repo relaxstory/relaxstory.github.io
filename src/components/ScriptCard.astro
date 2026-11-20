@@ -12,11 +12,12 @@ const d = script.data;
       {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
       {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
       {d.genre.map((g) => <span class="tag">{g}</span>)}
+      {d.crossplay && <span class="stamp">可反串</span>}
     </div>
     <h3>{d.title}</h3>
     <p class="tagline">{d.tagline}</p>
     <dl>
-      <div><dt>人數</dt><dd>{d.players}{d.roles && d.roles !== '不限' && <span class="dim">（{d.roles}）</span>}</dd></div>
+      <div><dt>人數</dt><dd>{d.players}{d.roles && d.roles !== '不限' && <span class="dim nowrap">（{d.roles}）</span>}</dd></div>
       <div><dt>時長</dt><dd>{d.duration}</dd></div>
       {d.difficulty && <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
       {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
@@ -37,6 +38,8 @@ const d = script.data;
   dt { color: var(--text-dim); min-width: 3em; flex-shrink: 0; }
   dd { margin: 0; }
   .dim { color: var(--text-dim); }
+  .nowrap { white-space: nowrap; }
+  .tags .stamp { margin: 0 0 6px 2px; }
 
   /* 手機：縮圖在左、文字在右，避免一張卡片太長 */
   @media (max-width: 560px) {

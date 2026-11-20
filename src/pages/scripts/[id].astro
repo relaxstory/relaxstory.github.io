@@ -43,7 +43,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
           <dl class="facts">
             <div><dt>人數</dt><dd>{d.players}</dd></div>
             <div><dt>平均時長</dt><dd>{d.duration}</dd></div>
-            {d.roles && <div><dt>角色配置</dt><dd>{d.roles}</dd></div>}
+            {d.roles && <div><dt>角色配置</dt><dd>{d.roles}{d.crossplay && <span class="stamp">可反串</span>}</dd></div>}
             {d.genderAdvice && <div><dt>玩家性別建議</dt><dd>{d.genderAdvice}</dd></div>}
             {d.difficulty && <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
             {site.showPrice && d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
@@ -77,7 +77,7 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
           <aside class="curator">
             <h2>館長筆記</h2>
             {note.map((p) => <p>{p}</p>)}
-            <p class="sign">— 館長 凱克</p>
+            <p class="sign">— K</p>
           </aside>
         )}
 

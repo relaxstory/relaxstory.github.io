@@ -35,6 +35,7 @@ interface CatalogScript {
   experience?: string;
   reading_load?: string;
   curator_note?: string;
+  crossplay?: boolean;
 }
 
 /** 「1女1男」→「1 女 1 男」 */
@@ -82,6 +83,7 @@ function toEntry(s: CatalogScript) {
     experience: s.experience || undefined,
     readingLoad: s.reading_load || undefined,
     curatorNote: s.curator_note || undefined,
+    crossplay: s.crossplay ?? false,
   };
 }
 
