@@ -27,7 +27,13 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "",
+      "author": "",
+      "features": [],
+      "suits": [],
+      "experience": "",
+      "reading_load": "",
+      "curator_note": ""
     },
     {
       "id": "tongliu-hewu",
@@ -55,7 +61,13 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "",
+      "author": "",
+      "features": [],
+      "suits": [],
+      "experience": "",
+      "reading_load": "",
+      "curator_note": ""
     },
     {
       "id": "yaomo-guiguai",
@@ -83,7 +95,13 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "",
+      "author": "",
+      "features": [],
+      "suits": [],
+      "experience": "",
+      "reading_load": "",
+      "curator_note": ""
     },
     {
       "id": "zuolao-chaonengzhe",
@@ -111,7 +129,13 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "",
+      "author": "",
+      "features": [],
+      "suits": [],
+      "experience": "",
+      "reading_load": "",
+      "curator_note": ""
     },
     {
       "id": "diesu",
@@ -139,7 +163,19 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "如何殺死一個死亡回溯者？\n\n死後可以復活，還能在平行時空裡穿梭，「不是我喜歡的世界，那創造下一個。」\n\n百年一遇的日全食突然出現，在那之後，世界似乎變得有些奇怪。\n\n我的愛人把我當陌生人？\n這裡有長得一模一樣的人？\n我看見了已死之人？\n\n故事要從一場「血色婚禮」說起：新郎與新娘剛剛舉辦完婚禮，新娘就被人謀殺……\n\n在無窮無盡的人生分支裡，總有一個你，一生幸福。",
+      "author": "小游《請將我深埋》",
+      "features": [
+        "強設定推理",
+        "平行時空"
+      ],
+      "suits": [
+        "喜歡設定推理",
+        "還原時間線"
+      ],
+      "experience": "新手可",
+      "reading_load": "6000字／共同資訊多",
+      "curator_note": "平行時空的設定雖然已經在許多故事中被使用了，但這種命運的交錯感依然讓人難忘呢……"
     },
     {
       "id": "half-world-deduction",
@@ -167,7 +203,13 @@
         "kaike"
       ],
       "price": null,
-      "description": ""
+      "description": "",
+      "author": "",
+      "features": [],
+      "suits": [],
+      "experience": "",
+      "reading_load": "",
+      "curator_note": ""
     }
   ]
 }

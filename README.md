@@ -40,7 +40,7 @@ npm run build    # 產生正式網站到 dist/
 
 - [x] Logo 與配色
 - [ ] 替換所有「範例內容」與「（待填寫）」的聯絡資訊
-- [ ] 加入劇本封面圖、主持人照片
+- [ ] 劇本封面（放 `src/assets/covers/<劇本 id>.jpg`）、主持人照片
 - [ ] 設定 `astro.config.mjs` 的 `site` 為正式網域
 - [x] 部署：GitHub Pages（`.github/workflows/deploy.yml`，push 到 main 自動部署）
   - 網址：https://relaxstory.github.io/ ；預約系統在 https://relaxstory.github.io/booking/

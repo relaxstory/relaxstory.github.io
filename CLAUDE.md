@@ -24,11 +24,13 @@ Re:LAX Story Lab（雷凱斯故事實驗室）劇本殺工作室官網。Astro �
 | 主持人 | `src/content/hosts/*.md`（`kaike` 凱克、`daidai` 玳玳、`zhizhi` 芝芝） |
 | 關於我們 | `src/content/about.md`（簡易符號標記，規則寫在檔案開頭；解析器 `src/lib/parseAbout.ts`） |
 | 首頁工作室理念 | `src/pages/index.astro` |
+| 劇本封面 | `src/assets/covers/<劇本 id>.(jpg|png|webp)`（說明見該資料夾的 README；沒有封面時顯示預設封面） |
 | Logo、favicon | `public/brand/`、`public/favicon.png` |
 
 - 劇本內容由店主在試算表填寫；試算表沒有的資訊（價格、難度、介紹）不要自己編，先問使用者。
 - `catalog.snapshot.json` 只是備援：試算表欄位有變動時，可在 relaxstory/booking 用後端測試環境重新產生（見該 repo 的 CLAUDE.md）。
 - 試算表 `featured` 勾選 TRUE 的劇本顯示在首頁精選（最多 6 部）。
+- 詳細頁的故事簡介、館長筆記、體驗建議指南（適合／經驗／閱讀量）、作者、特色也來自試算表；欄位空白時該區塊自動隱藏。
 
 ## 不要動／注意
 

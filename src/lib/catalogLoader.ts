@@ -29,6 +29,12 @@ interface CatalogScript {
   hosts: string[];
   price: number | null;
   description: string;
+  author?: string;
+  features?: string[];
+  suits?: string[];
+  experience?: string;
+  reading_load?: string;
+  curator_note?: string;
 }
 
 /** 「1女1男」→「1 女 1 男」 */
@@ -70,6 +76,12 @@ function toEntry(s: CatalogScript) {
     hosts: s.hosts,
     order: s.sort_order ?? 999,
     description: s.description,
+    author: s.author || undefined,
+    features: s.features ?? [],
+    suits: s.suits ?? [],
+    experience: s.experience || undefined,
+    readingLoad: s.reading_load || undefined,
+    curatorNote: s.curator_note || undefined,
   };
 }
 

@@ -1,33 +1,53 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-interface Props { script: CollectionEntry<'scripts'>; }
-const { script } = Astro.props;
+import Cover from './Cover.astro';
+interface Props { script: CollectionEntry<'scripts'>; eager?: boolean; }
+const { script, eager = false } = Astro.props;
 const d = script.data;
 ---
 <a href={`/scripts/${script.id}/`} class="card script-card">
-  <div class="tags">
-    {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
-    {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
-    {d.genre.map((g) => <span class="tag">{g}</span>)}
+  <div class="thumb"><Cover id={script.id} title={d.title} size="thumb" eager={eager} /></div>
+  <div class="body">
+    <div class="tags">
+      {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+      {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
+      {d.genre.map((g) => <span class="tag">{g}</span>)}
+    </div>
+    <h3>{d.title}</h3>
+    <p class="tagline">{d.tagline}</p>
+    <dl>
+      <div><dt>人數</dt><dd>{d.players}{d.roles && d.roles !== '不限' && <span class="dim">（{d.roles}）</span>}</dd></div>
+      <div><dt>時長</dt><dd>{d.duration}</dd></div>
+      {d.difficulty && <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
+      {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
+    </dl>
   </div>
-  <h3>{d.title}</h3>
-  <p class="tagline">{d.tagline}</p>
-  <dl>
-    <div><dt>人數</dt><dd>{d.players}{d.roles && d.roles !== '不限' && <span class="dim">（{d.roles}）</span>}</dd></div>
-    <div><dt>時長</dt><dd>{d.duration}</dd></div>
-    {d.difficulty && <div><dt>難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
-    {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
-  </dl>
 </a>
 
 <style>
-  .script-card { display: block; color: var(--text); }
+  .script-card { display: flex; flex-direction: column; color: var(--text); padding: 0; overflow: hidden; }
   .script-card:hover { text-decoration: none; }
+  .thumb { border-bottom: 1px solid var(--line); }
+  .thumb :global(.cover) { border-radius: 0; border: 0; }
+  .body { padding: 20px 24px 24px; }
   h3 { margin: 8px 0 4px; font-size: 1.4rem; }
-  .tagline { color: var(--text-dim); margin: 0 0 20px; font-style: italic; }
+  .tagline { color: var(--text-dim); margin: 0 0 16px; font-style: italic; }
   dl { margin: 0; display: grid; gap: 4px; font-size: 0.9rem; }
   dl div { display: flex; gap: 12px; }
   dt { color: var(--text-dim); min-width: 3em; flex-shrink: 0; }
   dd { margin: 0; }
   .dim { color: var(--text-dim); }
+
+  /* 手機：縮圖在左、文字在右，避免一張卡片太長 */
+  @media (max-width: 560px) {
+    .script-card { flex-direction: row; align-items: stretch; }
+    .thumb { flex: 0 0 112px; width: 112px; min-height: 150px; overflow: hidden; border-bottom: 0; border-right: 1px solid var(--line); position: relative; }
+    .thumb :global(picture) { display: contents; }
+    .thumb :global(.cover.cover) { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+    .thumb :global(.placeholder.placeholder) { padding: 10px; gap: 10px; }
+    .body { padding: 14px 16px; min-width: 0; }
+    h3 { font-size: 1.2rem; margin-top: 4px; }
+    .tagline { margin-bottom: 10px; font-size: 0.92rem; }
+    .tags :global(.tag) { font-size: 0.72rem; padding: 1px 8px; margin: 0 4px 4px 0; }
+  }
 </style>

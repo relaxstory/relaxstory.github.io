@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../../data/site';
 
@@ -10,46 +11,93 @@ export async function getStaticPaths() {
 
 const { script } = Astro.props;
 const d = script.data;
-// 介紹：空行分段，段內換行保留
-const paragraphs = d.description.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+// 空一行分段；段內換行保留
+const paras = (t?: string) => (t ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+const story = paras(d.description);
+const note = paras(d.curatorNote);
+const guide = [
+  d.suits.length > 0 && { label: '適合', value: d.suits },
+  d.experience && { label: '經驗', value: [d.experience] },
+  d.readingLoad && { label: '閱讀量', value: [d.readingLoad] },
+].filter(Boolean) as { label: string; value: string[] }[];
 const allHosts = await getCollection('hosts');
 const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 ---
 <Base title={d.title} description={`${d.tagline}｜${d.players}・${d.duration}`}>
   <article class="section">
-    <div class="container narrow">
+    <div class="container detail">
       <a href="/scripts/" class="back">← 劇本總覽</a>
-      <div class="tags">
-        {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
-        {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
-        {d.genre.map((g) => <span class="tag">{g}</span>)}
+
+      <!-- 封面＋基本資料 -->
+      <div class="hero">
+        <div class="hero-cover"><Cover id={script.id} title={d.title} size="large" /></div>
+        <div class="hero-info">
+          <div class="tags">
+            {d.status !== '上架中' && <span class="tag badge-soon">{d.status}</span>}
+            {d.badge && <span class={`tag badge ${d.badge === '熱門' ? 'hot' : 'new'}`}>{d.badge}</span>}
+            {d.genre.map((g) => <span class="tag">{g}</span>)}
+          </div>
+          <h1>{d.title}</h1>
+          <p class="tagline">{d.tagline}</p>
+
+          <dl class="facts">
+            <div><dt>人數</dt><dd>{d.players}</dd></div>
+            <div><dt>平均時長</dt><dd>{d.duration}</dd></div>
+            {d.roles && <div><dt>角色配置</dt><dd>{d.roles}</dd></div>}
+            {d.genderAdvice && <div><dt>玩家性別建議</dt><dd>{d.genderAdvice}</dd></div>}
+            {d.difficulty && <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
+            {site.showPrice && d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
+            {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
+            {d.author && <div><dt>作者</dt><dd>{d.author}</dd></div>}
+          </dl>
+          {d.features.length > 0 && (
+            <div class="features"><span class="label">特色</span>{d.features.map((f) => <span class="feature">{f}</span>)}</div>
+          )}
+          {d.adapted && <p class="meta">＊本劇本已完成繁體中文化編排。</p>}
+
+          <div class="cta">
+            {d.status === '上架中' && d.bookable
+              ? <a href={`${site.bookingUrl}?script=${script.id}`} class="btn solid">預約這個劇本</a>
+              : <p class="dim">{d.status === '即將推出' ? '此劇本即將推出，敬請期待。' : '此劇本目前暫停預約，歡迎透過 Instagram 詢問。'}</p>}
+          </div>
+        </div>
       </div>
-      <h1>{d.title}</h1>
-      <p class="tagline">{d.tagline}</p>
 
-      <dl class="facts">
-        <div><dt>人數</dt><dd>{d.players}</dd></div>
-        <div><dt>平均時長</dt><dd>{d.duration}</dd></div>
-        {d.roles && <div><dt>角色配置</dt><dd>{d.roles}</dd></div>}
-        {d.genderAdvice && <div><dt>玩家性別建議</dt><dd>{d.genderAdvice}</dd></div>}
-        {d.difficulty && <div><dt>推理難度</dt><dd class="stars">{'★'.repeat(d.difficulty)}{'☆'.repeat(5 - d.difficulty)}</dd></div>}
-        {site.showPrice && d.price && <div><dt>價格</dt><dd>{d.price}</dd></div>}
-        {d.series && <div><dt>系列</dt><dd>{d.series}</dd></div>}
-      </dl>
-      {d.adapted && <p class="meta">＊本劇本已完成繁體中文化編排。</p>}
+      <div class="sections">
+        <!-- 故事簡介 -->
+        {story.length > 0 && (
+          <section class="story">
+            <h2>故事簡介</h2>
+            {story.map((p) => <p>{p}</p>)}
+          </section>
+        )}
 
-      {paragraphs.length > 0 && <div class="prose">{paragraphs.map((p) => <p>{p}</p>)}</div>}
+        <!-- 館長筆記 -->
+        {note.length > 0 && (
+          <aside class="curator">
+            <h2>館長筆記</h2>
+            {note.map((p) => <p>{p}</p>)}
+            <p class="sign">— 館長 凱克</p>
+          </aside>
+        )}
 
-      {hosts.length > 0 && (
-        <section class="hosts">
-          <h2>主持人</h2>
-          <ul>{hosts.map((h) => <li><a href={`/hosts/#${h.id}`}>{h.data.name}</a><span>{h.data.title}</span></li>)}</ul>
-        </section>
-      )}
+        <!-- 體驗建議指南 -->
+        {guide.length > 0 && (
+          <section class="guide">
+            <h2>體驗建議指南</h2>
+            <dl>
+              {guide.map((g) => <div><dt>{g.label}</dt><dd>{g.value.map((v) => <span>{v}</span>)}</dd></div>)}
+            </dl>
+          </section>
+        )}
 
-      {d.status === '上架中' && d.bookable
-        ? <a href={`${site.bookingUrl}?script=${script.id}`} class="btn solid">預約這個劇本</a>
-        : <p class="dim">{d.status === '即將推出' ? '此劇本即將推出，敬請期待。' : '此劇本目前暫停預約，歡迎透過 Instagram 詢問。'}</p>}
+        {hosts.length > 0 && (
+          <section class="hosts">
+            <h2>主持人</h2>
+            <ul>{hosts.map((h) => <li><a href={`/hosts/#${h.id}`}>{h.data.name}</a><span>{h.data.title}</span></li>)}</ul>
+          </section>
+        )}
+      </div>
 
       <aside class="notes">
         {site.scriptNotes.map((n) => <p>＊{n}</p>)}
@@ -59,25 +107,56 @@ const hosts = allHosts.filter((h) => d.hosts.includes(h.id));
 </Base>
 
 <style>
-  .narrow { max-width: 760px; }
+  .detail { max-width: 1000px; }
   .back { display: inline-block; margin-bottom: 24px; color: var(--text-dim); }
-  h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 8px 0; }
-  .tagline { font-style: italic; color: var(--text-dim); font-size: 1.1rem; }
+
+  .hero { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 40px; align-items: start; }
+  .hero-cover { position: sticky; top: 88px; }
+  h1 { font-size: clamp(2rem, 6vw, 2.8rem); margin: 8px 0; }
+  .tagline { font-style: italic; color: var(--text-dim); font-size: 1.1rem; margin: 0; }
   .facts {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px;
-    margin: 32px 0 8px; padding: 20px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px 16px;
+    margin: 24px 0 12px; padding: 18px 20px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
   }
   .facts dt { color: var(--text-dim); font-size: 0.82rem; }
   .facts dd { margin: 0; font-weight: 600; }
-  .meta { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 24px; }
-  .prose { margin: 24px 0; }
-  .prose p { white-space: pre-line; color: #3a4250; }
-  .hosts { margin: 32px 0; }
-  .hosts h2 { font-size: 1.3rem; }
-  .hosts ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .features { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 4px 0 10px; }
+  .label { color: var(--text-dim); font-size: 0.85rem; margin-right: 4px; }
+  .feature { padding: 3px 12px; border-radius: 999px; background: var(--navy); color: #f4efe5; font-size: 0.85rem; }
+  .meta { color: var(--text-dim); font-size: 0.85rem; margin: 0; }
+  .cta { margin-top: 24px; }
+
+  .sections { display: grid; gap: 28px; margin-top: 48px; max-width: 760px; }
+  .sections h2 { font-size: 1.35rem; margin: 0 0 14px; display: flex; align-items: center; gap: 12px; }
+  .sections h2::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+  .story { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(22px, 5vw, 36px); }
+  .story p { white-space: pre-line; color: #3a4250; line-height: 1.95; margin: 0 0 1em; }
+  .story p:last-child { margin-bottom: 0; font-family: var(--serif); font-weight: 600; color: var(--navy); }
+
+  .curator {
+    background: #f6edd9; border-radius: 4px 4px 14px 4px; padding: 22px 24px 18px;
+    box-shadow: 0 10px 24px -18px rgba(27, 36, 49, 0.6); transform: rotate(-0.6deg);
+    border-left: 3px solid var(--accent);
+  }
+  .curator p { white-space: pre-line; font-family: var(--serif); font-size: 1.08rem; line-height: 1.9; color: #3b3326; margin: 0 0 0.6em; }
+  .curator .sign { text-align: right; color: var(--accent-text); font-size: 0.95rem; margin: 6px 0 0; }
+
+  .guide dl { margin: 0; display: grid; gap: 10px; }
+  .guide dl div { display: grid; grid-template-columns: 4.5em 1fr; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .guide dt { color: var(--accent-text); letter-spacing: 0.1em; }
+  .guide dd { margin: 0; display: flex; flex-direction: column; gap: 2px; }
+
+  .hosts ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px; }
   .hosts li { padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; background: var(--bg-card); }
   .hosts li span { color: var(--text-dim); font-size: 0.85rem; }
   .dim { color: var(--text-dim); }
-  .notes { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .notes { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); max-width: 760px; }
   .notes p { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 6px; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; }
+    .hero-cover { position: static; max-width: 360px; width: 100%; margin: 0 auto; }
+    .sections { margin-top: 36px; }
+  }
 </style>

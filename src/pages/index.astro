@@ -46,7 +46,7 @@ const scripts = featured.length ? featured.slice(0, 6) : all.slice(0, 3);
         </div>
         <a href="/scripts/" class="more">更多劇本 →</a>
       </div>
-      <div class="grid">{scripts.map((s) => <ScriptCard script={s} />)}</div>
+      <div class="grid">{scripts.map((s, i) => <ScriptCard script={s} eager={i < 3} />)}</div>
     </div>
   </section>
 

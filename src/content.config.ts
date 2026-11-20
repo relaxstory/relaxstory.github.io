@@ -24,7 +24,13 @@ const scripts = defineCollection({
     bookable: z.boolean().default(true),         // 預約系統是否開放預約此劇本
     hosts: z.array(z.string()).default([]),
     order: z.number().default(999),
-    description: z.string().default(''),         // 劇本介紹（儲存格內換行即分段）
+    description: z.string().default(''),         // 故事簡介（空一行 = 分段）
+    author: z.string().optional(),               // 作者
+    features: z.array(z.string()).default([]),   // 特色
+    suits: z.array(z.string()).default([]),      // 適合哪些玩家
+    experience: z.string().optional(),           // 經驗需求
+    readingLoad: z.string().optional(),          // 閱讀量
+    curatorNote: z.string().optional(),          // 館長筆記
   }),
 });
 
